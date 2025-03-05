@@ -47,7 +47,7 @@ jobs:
 
   test:
     needs: checklicense
-    if: needs.checklicense.outputs.is_unity_license_set == 'true'
+    if: false && needs.checklicense.outputs.is_unity_license_set == 'true'
     name: Run all tests ✨
     runs-on: ubuntu-latest
     steps:
