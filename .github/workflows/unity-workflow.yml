@@ -1,9 +1,9 @@
 name: Unity CI/CD
 
 on:
-  pull_request:
-    paths-ignore:
-    - 'src/**'
+  #pull_request:
+  #  paths-ignore:
+  #  - 'src/**'
   push:
     paths-ignore:
     - 'src/**'
