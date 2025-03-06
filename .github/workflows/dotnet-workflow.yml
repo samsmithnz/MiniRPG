@@ -1,11 +1,15 @@
-name: CI/CD
+name: .NET CI/CD
 on:
   push:
     branches:
     - main
+    paths-ignore:
+    - 'MiniRPGGame/**'
   pull_request:
     branches:
     - main
+    paths-ignore:
+    - 'MiniRPGGame/**'
 jobs:
   build:
     name: Build job
