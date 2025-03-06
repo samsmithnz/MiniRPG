@@ -5,6 +5,8 @@ on:
   #  paths-ignore:
   #  - 'src/**'
   push:
+    branches:
+    - main
     paths-ignore:
     - 'src/**'
   workflow_dispatch:
