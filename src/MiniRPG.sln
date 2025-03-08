@@ -5,24 +5,24 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniRPG.Tests", "MiniRPG.Tests\MiniRPG.Tests.csproj", "{0AEE6728-47F4-4121-83BD-63EF15D336B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniRPG", "MiniRPG\MiniRPG.csproj", "{0294C4F1-5793-497E-A3B8-470C6E71E1CA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniRPG.Logic", "MiniRPG.Logic\MiniRPG.Logic.csproj", "{03C65F7C-4204-4CF3-A2B6-C6D846FB5A2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{0AEE6728-47F4-4121-83BD-63EF15D336B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0AEE6728-47F4-4121-83BD-63EF15D336B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0AEE6728-47F4-4121-83BD-63EF15D336B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0AEE6728-47F4-4121-83BD-63EF15D336B5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0294C4F1-5793-497E-A3B8-470C6E71E1CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0294C4F1-5793-497E-A3B8-470C6E71E1CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0294C4F1-5793-497E-A3B8-470C6E71E1CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0294C4F1-5793-497E-A3B8-470C6E71E1CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03C65F7C-4204-4CF3-A2B6-C6D846FB5A2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03C65F7C-4204-4CF3-A2B6-C6D846FB5A2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03C65F7C-4204-4CF3-A2B6-C6D846FB5A2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03C65F7C-4204-4CF3-A2B6-C6D846FB5A2D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
