@@ -19,5 +19,19 @@ public sealed class CharacterTests
         Assert.AreEqual(1, character.Life);
     }
 
-  
+    [TestMethod]
+    public void CharacterLifeTest()
+    {
+        //Arrange
+        Character character = new(new Vector3(0, 0, 0));
+        character.Life = 2;
+
+        //Act
+
+        //Assert
+        Assert.AreEqual(new Vector3(0, 0, 0), character.Location);
+        Assert.AreEqual(2, character.Life);
+    }
+
+
 }

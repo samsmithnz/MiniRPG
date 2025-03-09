@@ -65,4 +65,18 @@ public sealed class CharacterMovementTests
 
     }
 
+    [TestMethod]
+    public void CharacterAvailableNoMovesTest()
+    {
+        //Arrange
+        string[,] map = MapCore.InitializeMap(1, 1);
+        Game game = new(map, new Vector3(0, 0, 0));
+
+        //Act
+
+        //Assert
+        Assert.AreEqual(0, game.Character.AvailableMoves.Count);
+
+    }
+
 }

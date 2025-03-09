@@ -31,14 +31,14 @@ public sealed class MapTests
         map[0, 0] = "A";
         map[1, 0] = "B";
         map[0, 1] = "C";
-        map[1, 1] = "D";
+        map[1, 1] = "";
 
         //Act
         string mapString = MapCore.GetMapString(map);
 
         //Assert
         string expectedMapString = @"
-C D 
+C . 
 A B 
 ";
         Assert.AreEqual(expectedMapString, mapString);
@@ -55,7 +55,6 @@ A B
         tileTypeList[new Vector3(0, 0,0)] = "A";
         tileTypeList[new Vector3(1, 0, 0)] = "B";
         tileTypeList[new Vector3(0, 1, 0)] = "C";
-        tileTypeList[new Vector3(1, 1, 0)] = "D";
 
         //Act
         map = MapCore.AddTileTypesToMap(map, tileTypeList);
@@ -63,7 +62,7 @@ A B
 
         //Assert
         string expectedMapString = @"
-C D 
+C . 
 A B 
 ";
         Assert.AreEqual(expectedMapString, mapString);
