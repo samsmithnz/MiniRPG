@@ -12,19 +12,19 @@ namespace MiniRPG.Logic.Map
         /// Initialize a x by y map array
         /// </summary>
         /// <param name="xMax">x size</param>
-        /// <param name="yMax">y size</param>
+        /// <param name="zMax">z size</param>
         /// <param name="initialString">The initial string to initialize the map with - usually ""</param>
         /// <returns>The populated map/array</returns>
-        public static string[,] InitializeMap(int xMax, int yMax, string initialString = "")
+        public static string[,] InitializeMap(int xMax, int zMax, string initialString = "")
         {
-            string[,] map = new string[xMax, yMax];
+            string[,] map = new string[xMax, zMax];
 
             //Initialize the map
-            for (int y = 0; y < yMax; y++)
+            for (int z = 0; z < zMax; z++)
             {
                 for (int x = 0; x < xMax; x++)
                 {
-                    map[x, y] = initialString;
+                    map[x, z] = initialString;
                 }
             }
 
@@ -34,17 +34,17 @@ namespace MiniRPG.Logic.Map
         public static string GetMapString(string[,] map, bool stripOutBlanks = false)
         {
             int xMax = map.GetLength(0);
-            int yMax = map.GetLength(1);
+            int zMax = map.GetLength(1);
             StringBuilder sb = new StringBuilder();
             sb.Append(Environment.NewLine);
-            for (int y = yMax - 1; y >= 0; y--)
+            for (int z = zMax - 1; z >= 0; z--)
             {
                 StringBuilder sbLine = new StringBuilder();
                 for (int x = 0; x < xMax; x++)
                 {
-                    if (map[x, y] != "")
+                    if (map[x, z] != "")
                     {
-                        sbLine.Append(map[x, y] + " ");
+                        sbLine.Append(map[x, z] + " ");
                     }
                     else
                     {
@@ -76,9 +76,9 @@ namespace MiniRPG.Logic.Map
             foreach (KeyValuePair<Vector3, string> item in tileTypeList)
             {
                 //Check that the square is empty - we don't want to overwrite something that exists and only put a tile on an unused tile
-                if (map[(int)item.Key.X, (int)item.Key.Y] == "")
+                if (map[(int)item.Key.X, (int)item.Key.Z] == "")
                 {
-                    map[(int)item.Key.X, (int)item.Key.Y] = item.Value;
+                    map[(int)item.Key.X, (int)item.Key.Z] = item.Value;
                 }
             }
             return map;

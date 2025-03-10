@@ -49,12 +49,12 @@ A B
     {
         //Arrange
         int xMax = 2;
-        int yMax = 2;
-        string[,] map = MapCore.InitializeMap(xMax, yMax);
+        int zMax = 2;
+        string[,] map = MapCore.InitializeMap(xMax, zMax);
         Dictionary<Vector3, string> tileTypeList = new();
         tileTypeList[new Vector3(0, 0,0)] = "A";
         tileTypeList[new Vector3(1, 0, 0)] = "B";
-        tileTypeList[new Vector3(0, 1, 0)] = "C";
+        tileTypeList[new Vector3(0, 0, 1)] = "C";
 
         //Act
         map = MapCore.AddTileTypesToMap(map, tileTypeList);

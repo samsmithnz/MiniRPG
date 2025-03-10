@@ -20,15 +20,15 @@ namespace MiniRPG.Logic
             GetAvailableMoves();
         }
 
-        public void GetAvailableMoves()
+        public string GetAvailableMoves()
         {
             List<Vector3> availableMoves = new List<Vector3>();
 
             // Check all around the current character location for possible moves
-            Vector3 NorthLocation = new Vector3(Character.Location.X, Character.Location.Y + 1, 0);
-            Vector3 EastLocation = new Vector3(Character.Location.X + 1, Character.Location.Y, 0);
-            Vector3 SouthLocation = new Vector3(Character.Location.X, Character.Location.Y - 1, 0);
-            Vector3 WestLocation = new Vector3(Character.Location.X - 1, Character.Location.Y, 0);
+            Vector3 NorthLocation = new Vector3(Character.Location.X, 0, Character.Location.Z + 1);
+            Vector3 EastLocation = new Vector3(Character.Location.X + 1, 0, Character.Location.Z);
+            Vector3 SouthLocation = new Vector3(Character.Location.X, 0, Character.Location.Z - 1);
+            Vector3 WestLocation = new Vector3(Character.Location.X - 1, 0, Character.Location.Z);
             if (CheckLocationForPossibleMove(NorthLocation))
             {
                 availableMoves.Add(NorthLocation);
@@ -52,19 +52,21 @@ namespace MiniRPG.Logic
 
             // Set the available moves for the character
             Character.AvailableMoves = availableMoves;
+
+            return Character.Location.ToString();
         }
 
         private bool CheckLocationForPossibleMove(Vector3 location)
         {
             int x = (int)location.X;
-            int y = (int)location.Y;
-            if (x < 0 || x >= Map.GetLength(0) || y < 0 || y >= Map.GetLength(1))
+            int z = (int)location.Z;
+            if (x < 0 || x >= Map.GetLength(0) || z < 0 || z >= Map.GetLength(1))
             {
                 return false;
             }
             else
             {
-                if (Map[(int)location.X, (int)location.Y] == "")
+                if (Map[(int)location.X, (int)location.Z] == "")
                 {
                     return true;
                 }
