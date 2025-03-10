@@ -37,9 +37,12 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: .NET test
-      run: dotnet test src/MiniRPG.Tests/MiniRPG.Tests.csproj -c Release
+      run: dotnet test src/MiniRPG.Tests/MiniRPG.Tests.csproj -c Debug
     - name: .NET publish
-      run: dotnet publish src/MiniRPG/MiniRPG.csproj -c Release -p:Version='${{ steps.gitversion.outputs.SemVer }}'
+      run: dotnet publish src/MiniRPG.Logic/MiniRPG.Logic.csproj -c Debug -p:Version='${{ steps.gitversion.outputs.SemVer }}'
+    - name: Copy MiniRPG output to Assets/Logic
+      if: false
+      run: xcopy /s /e /y src/MiniRPG.Logic/bin/Debug MiniRPGGame/Assets/Logic/
     - name: Upload package back to GitHub
       uses: actions/upload-artifact@v4
       with:
