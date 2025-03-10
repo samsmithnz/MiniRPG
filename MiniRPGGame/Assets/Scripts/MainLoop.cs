@@ -62,8 +62,7 @@ namespace Assets.Scripts
             }
             if (_buttonSouth != null)
             {
-                Debug.Log("South move available: " + _game.Character.SouthMoveAvailable);
-                if (_game.Character.SouthMoveAvailable) 
+                if (_game.Character.SouthMoveAvailable)
                 {
                     _buttonSouth.SetActive(true);
                 }
@@ -96,7 +95,7 @@ namespace Assets.Scripts
         public void MoveEast()
         {
             Debug.Log("Move East");
-            Vector3 newLocation = new Vector3(_game.Character.Location.X + 1, _game.Character.Location.Y, _game.Character.Location.Z + 1);
+            Vector3 newLocation = new Vector3(_game.Character.Location.X + 1, _game.Character.Location.Y, _game.Character.Location.Z);
             _game.Character.Location = Utility.ConvertToNumericsV3(newLocation);
             MoveCharacter(newLocation);
         }
