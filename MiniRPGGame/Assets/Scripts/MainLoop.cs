@@ -62,7 +62,8 @@ namespace Assets.Scripts
             }
             if (_buttonSouth != null)
             {
-                if (_game.Character.SouthMoveAvailable)
+                Debug.Log("South move available: " + _game.Character.SouthMoveAvailable);
+                if (_game.Character.SouthMoveAvailable) 
                 {
                     _buttonSouth.SetActive(true);
                 }
