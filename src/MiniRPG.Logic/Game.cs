@@ -32,18 +32,22 @@ namespace MiniRPG.Logic
             if (CheckLocationForPossibleMove(NorthLocation))
             {
                 availableMoves.Add(NorthLocation);
+                Character.NorthMoveAvailable = true;
             }
             if (CheckLocationForPossibleMove(EastLocation))
             {
                 availableMoves.Add(EastLocation);
+                Character.EastMoveAvailable = true;
             }
             if (CheckLocationForPossibleMove(SouthLocation))
             {
                 availableMoves.Add(SouthLocation);
+                Character.SouthMoveAvailable = true;
             }
             if (CheckLocationForPossibleMove(WestLocation))
             {
                 availableMoves.Add(WestLocation);
+                Character.WestMoveAvailable = true;
             }
 
             // Set the available moves for the character
