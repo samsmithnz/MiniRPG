@@ -11,6 +11,7 @@ namespace Assets.Scripts
         private GameObject _buttonEast;
         private GameObject _buttonSouth;
         private GameObject _buttonWest;
+        private int _levelNumber = 1;
 
         void Start()
         {
@@ -36,7 +37,7 @@ namespace Assets.Scripts
             map[(int)startingLocation.x, (int)startingLocation.z] = "";
             map[(int)endingLocation.x, (int)endingLocation.z] = "";
 
-            Level.SetupLevel(gameObject, map, true, true, startingLocation, endingLocation);
+            Level.SetupLevel(gameObject, _levelNumber, map, true, true, startingLocation, endingLocation);
 
             _buttonNorth = GameObject.Find("ButtonNorth");
             _buttonEast = GameObject.Find("ButtonEast");
@@ -135,19 +136,19 @@ namespace Assets.Scripts
         void Update()
         {
             // Capture key presses to move north when W or up arrow is pressed
-            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+            if (_buttonNorth.activeSelf && (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)))
             {
                 MoveNorth();
             }
-            else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+            else if (_buttonEast.activeSelf && (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)))
             {
                 MoveEast();
             }
-            else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+            else if (_buttonSouth.activeSelf && (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)))
             {
                 MoveSouth();
             }
-            else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+            else if (_buttonWest.activeSelf && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)))
             {
                 MoveWest();
             }

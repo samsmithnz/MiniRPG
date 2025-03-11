@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.Analytics;
 using UnityEditor.Playables;
 using UnityEngine;
 
@@ -21,7 +23,13 @@ namespace Assets.Scripts
         //    CharacterStartingLocation = characterStartingLocation;
         //}
 
-        public static void SetupLevel(GameObject parentGameObject, string[,] map, bool showLinesOnFloor, bool showCoordsOnFloor, Vector3 startingLocation, Vector3 endingLocation)
+        public static void SetupLevel(GameObject parentGameObject,
+            int levelNumber,
+            string[,] map, 
+            bool showLinesOnFloor, 
+            bool showCoordsOnFloor, 
+            Vector3 startingLocation, 
+            Vector3 endingLocation)
         {
             Font font = Resources.GetBuiltinResource(typeof(Font), "LegacyRuntime.ttf") as Font;
             int width = map.GetLength(0);
@@ -35,6 +43,11 @@ namespace Assets.Scripts
             //};
             //parentFloor.transform.parent = parentGameObject.transform;
 
+            GameObject textLevel = GameObject.Find("TextLevel");
+            if (textLevel != null)
+            {
+                textLevel.GetComponent<TextMeshProUGUI>().text = "Level: " + levelNumber.ToString();
+            }
             //Draw the map on the screen
             for (int x = 0; x <= width - 1; x++)
             {
@@ -147,7 +160,7 @@ namespace Assets.Scripts
             startIndicatorPrefab.name = "StartIndicator";
             startIndicatorPrefab.transform.parent = startAndEndIndicators.transform;
             GameObject endIndicatorPrefab = Instantiate(Resources.Load<GameObject>("EndTarget"));
-            endIndicatorPrefab.transform.position = new Vector3(endingLocation.x,0, endingLocation.z);
+            endIndicatorPrefab.transform.position = new Vector3(endingLocation.x, 0, endingLocation.z);
             endIndicatorPrefab.name = "EndIndicator";
             endIndicatorPrefab.transform.parent = startAndEndIndicators.transform;
 
