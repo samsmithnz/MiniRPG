@@ -78,7 +78,7 @@ namespace MiniRPG.Logic
                 }
             }
 
-            //Create an inner skinny wall with a door in the middle
+            //Create an inner wall with a door in the middle
             map[1, 4] = "w";
             map[2, 4] = "w";
             map[3, 4] = "w";
