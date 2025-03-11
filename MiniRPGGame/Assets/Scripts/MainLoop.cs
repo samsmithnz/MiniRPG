@@ -1,8 +1,6 @@
 ﻿using MiniRPG.Logic;
 using MiniRPG.Logic.Map;
-using System;
 using UnityEngine;
-using static UnityEditor.FilePathAttribute;
 
 namespace Assets.Scripts
 {
@@ -16,21 +14,38 @@ namespace Assets.Scripts
 
         void Start()
         {
-            int xMax = 7;
-            int yMax = 7;
-            string[,] map = MapCore.InitializeMap(xMax, yMax);
-            Vector3 startingLocation = new Vector3(3, 0, 0);
+            int xMax = 9;
+            int zMax = 9;
+            string[,] map = MapCore.InitializeMap(xMax, zMax);
+            Vector3 startingLocation = new(4, 0, 0);
+            Vector3 endingLocation = new(4, 0, 8);
+
+            //Create the outside walls
+            for (int x = 0; x <= xMax - 1; x++)
+            {
+                for (int z = 0; z <= zMax - 1; z++)
+                {
+                    if (x == 0 || z == 0 || x == xMax-1 || z == zMax-1)
+                    {
+                        map[x, z] = "W";
+                    }
+
+                }
+            }
+            //Clear the starting and ending locations
+            map[(int)startingLocation.x, (int)startingLocation.z] = "";
+            map[(int)endingLocation.x, (int)endingLocation.z] = "";
 
             Level.SetupLevel(gameObject, map, true, true, startingLocation);
 
-            _buttonNorth = GameObject.Find("ButtonNorth");
-            _buttonEast = GameObject.Find("ButtonEast");
-            _buttonSouth = GameObject.Find("ButtonSouth");
-            _buttonWest = GameObject.Find("ButtonWest");
+                _buttonNorth = GameObject.Find("ButtonNorth");
+                _buttonEast = GameObject.Find("ButtonEast");
+                _buttonSouth = GameObject.Find("ButtonSouth");
+                _buttonWest = GameObject.Find("ButtonWest");
 
-            _game = new(map, Utility.ConvertToNumericsV3(startingLocation));
-            MoveCharacter(startingLocation);
-        }
+                _game = new(map, Utility.ConvertToNumericsV3(startingLocation));
+                MoveCharacter(startingLocation);
+            }
 
         private void MoveCharacter(Vector3 location)
         {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEditor.Playables;
 using UnityEngine;
 
@@ -37,12 +38,12 @@ namespace Assets.Scripts
             //Draw the map on the screen
             for (int x = 0; x <= width - 1; x++)
             {
-                for (int y = 0; y <= breadth - 1; y++)
+                for (int z = 0; z <= breadth - 1; z++)
                 {
                     //Create map floor
                     GameObject newFloorObject = new GameObject();//.CreatePrimitive(PrimitiveType.Cube);
-                    newFloorObject.transform.position = new Vector3(x, -0.5f, y);
-                    newFloorObject.name = Utility.CreateName("floor_type_" + map[x, y], newFloorObject.transform.position);
+                    newFloorObject.transform.position = new Vector3(x, -0.5f, z);
+                    newFloorObject.name = Utility.CreateName("floor_type_" + map[x, z], newFloorObject.transform.position);
                     newFloorObject.transform.parent = parentGameObject.transform;
 
                     if (showCoordsOnFloor == true)
@@ -72,7 +73,7 @@ namespace Assets.Scripts
                         floorText.alignment = TextAnchor.MiddleCenter;
                         floorText.fontSize = 24;
                         floorText.font = font;
-                        floorText.text = "x" + x.ToString() + ",y" + y.ToString();
+                        floorText.text = "x" + x.ToString() + ",y" + z.ToString();
                     }
 
                     //GameObject newObject = GameObject.Instantiate(Resources.Load<GameObject>("PolygonStarter/Prefabs/SM_PolygonPrototype_Buildings_Block_1x1_01P"), Vector3.zero, Quaternion.identity) as GameObject;
@@ -87,7 +88,7 @@ namespace Assets.Scripts
                     if (showLinesOnFloor == true)
                     {
                         //Draw line renderers
-                        if (x == 0 && y != breadth - 1)
+                        if (x == 0 && z != breadth - 1)
                         {
                             LineRenderer xGuideLine = newFloorObject.AddComponent<LineRenderer>();
                             if (xGuideLine != null)
@@ -96,11 +97,11 @@ namespace Assets.Scripts
                                 xGuideLine.widthMultiplier = 0.04f;
                                 xGuideLine.startColor = Color.cyan;
                                 xGuideLine.endColor = Color.cyan;
-                                xGuideLine.SetPosition(0, new Vector3(-0.5f, 0.01f, y + 0.5f));
-                                xGuideLine.SetPosition(1, new Vector3(width - 0.5f, 0.01f, y + 0.5f));
+                                xGuideLine.SetPosition(0, new Vector3(-0.5f, 0.01f, z + 0.5f));
+                                xGuideLine.SetPosition(1, new Vector3(width - 0.5f, 0.01f, z + 0.5f));
                             }
                         }
-                        else if (y == breadth - 1 && x != 0)
+                        else if (z == breadth - 1 && x != 0)
                         {
                             LineRenderer yGuideLine = newFloorObject.AddComponent<LineRenderer>();
                             if (yGuideLine != null)
@@ -117,6 +118,26 @@ namespace Assets.Scripts
 
                 } //end z for
             } //end x for
+
+            //Create the border
+            //load the prefab from the assets/prefab folder
+            GameObject outsideWalls = new GameObject();
+            outsideWalls.name = "OutsideWalls";
+            outsideWalls.transform.parent = parentGameObject.transform;
+            for (int x = 0; x <= width - 1; x++)
+            {
+                for (int z = 0; z <= breadth - 1; z++)
+                {
+                    if (map[x, z] == "W")
+                    {
+                        GameObject borderPrefab = Instantiate(Resources.Load<GameObject>("OutsideWall"));
+                        borderPrefab.transform.position = new Vector3(x - 0.5f, 0, z - 0.5f);
+                        borderPrefab.name = "OutsideWall_" + "x" + x + "_z" + z;
+                        borderPrefab.transform.parent = outsideWalls.transform;
+                    }
+                }
+            }
+
 
             //Create the character
             GameObject characterObject = GameObject.CreatePrimitive(PrimitiveType.Capsule);
