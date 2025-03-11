@@ -25,7 +25,7 @@ namespace Assets.Scripts
             {
                 for (int z = 0; z <= zMax - 1; z++)
                 {
-                    if (x == 0 || z == 0 || x == xMax-1 || z == zMax-1)
+                    if (x == 0 || z == 0 || x == xMax - 1 || z == zMax - 1)
                     {
                         map[x, z] = "W";
                     }
@@ -36,16 +36,16 @@ namespace Assets.Scripts
             map[(int)startingLocation.x, (int)startingLocation.z] = "";
             map[(int)endingLocation.x, (int)endingLocation.z] = "";
 
-            Level.SetupLevel(gameObject, map, true, true, startingLocation);
+            Level.SetupLevel(gameObject, map, true, true, startingLocation, endingLocation);
 
-                _buttonNorth = GameObject.Find("ButtonNorth");
-                _buttonEast = GameObject.Find("ButtonEast");
-                _buttonSouth = GameObject.Find("ButtonSouth");
-                _buttonWest = GameObject.Find("ButtonWest");
+            _buttonNorth = GameObject.Find("ButtonNorth");
+            _buttonEast = GameObject.Find("ButtonEast");
+            _buttonSouth = GameObject.Find("ButtonSouth");
+            _buttonWest = GameObject.Find("ButtonWest");
 
-                _game = new(map, Utility.ConvertToNumericsV3(startingLocation));
-                MoveCharacter(startingLocation);
-            }
+            _game = new(map, Utility.ConvertToNumericsV3(startingLocation));
+            MoveCharacter(startingLocation);
+        }
 
         private void MoveCharacter(Vector3 location)
         {
@@ -130,5 +130,28 @@ namespace Assets.Scripts
             _game.Character.Location = Utility.ConvertToNumericsV3(newLocation);
             MoveCharacter(newLocation);
         }
+
+        //capture key presses to move north when w or arrow is pressed
+        void Update()
+        {
+            // Capture key presses to move north when W or up arrow is pressed
+            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                MoveNorth();
+            }
+            else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                MoveEast();
+            }
+            else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                MoveSouth();
+            }
+            else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                MoveWest();
+            }
+        }
+
     }
 }

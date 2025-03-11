@@ -21,7 +21,7 @@ namespace Assets.Scripts
         //    CharacterStartingLocation = characterStartingLocation;
         //}
 
-        public static void SetupLevel(GameObject parentGameObject, string[,] map, bool showLinesOnFloor, bool showCoordsOnFloor, Vector3 startingLocation)
+        public static void SetupLevel(GameObject parentGameObject, string[,] map, bool showLinesOnFloor, bool showCoordsOnFloor, Vector3 startingLocation, Vector3 endingLocation)
         {
             Font font = Resources.GetBuiltinResource(typeof(Font), "LegacyRuntime.ttf") as Font;
             int width = map.GetLength(0);
@@ -138,6 +138,18 @@ namespace Assets.Scripts
                 }
             }
 
+            //Create the start and end indicators
+            GameObject startAndEndIndicators = new GameObject();
+            startAndEndIndicators.name = "StartAndEndIndicators";
+            startAndEndIndicators.transform.parent = parentGameObject.transform;
+            GameObject startIndicatorPrefab = Instantiate(Resources.Load<GameObject>("StartArrow"));
+            startIndicatorPrefab.transform.position = new Vector3(startingLocation.x, 0, startingLocation.z);
+            startIndicatorPrefab.name = "StartIndicator";
+            startIndicatorPrefab.transform.parent = startAndEndIndicators.transform;
+            GameObject endIndicatorPrefab = Instantiate(Resources.Load<GameObject>("EndTarget"));
+            endIndicatorPrefab.transform.position = new Vector3(endingLocation.x,0, endingLocation.z);
+            endIndicatorPrefab.name = "EndIndicator";
+            endIndicatorPrefab.transform.parent = startAndEndIndicators.transform;
 
             //Create the character
             GameObject characterObject = GameObject.CreatePrimitive(PrimitiveType.Capsule);
