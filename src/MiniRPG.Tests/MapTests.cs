@@ -1,4 +1,5 @@
-﻿using MiniRPG.Logic.Map;
+﻿using MiniRPG.Logic;
+using MiniRPG.Logic.Map;
 using System.Numerics;
 
 namespace MiniRPG.Tests;
@@ -64,6 +65,50 @@ A B
         string expectedMapString = @"
 C . 
 A B 
+";
+        Assert.AreEqual(expectedMapString, mapString);
+    }
+
+    [TestMethod]
+    public void MapStringLevel1Test()
+    {
+        //Arrange
+        Game game = new(1);
+
+        //Act 
+        string mapString = MapCore.GetMapString(game.Level.Map, true);
+
+        //Arrange
+        string expectedMapString = @"
+W W . W W 
+W . . . W 
+W . . . W 
+W . . . W 
+W W . W W 
+";
+        Assert.AreEqual(expectedMapString, mapString);
+    }
+
+    [TestMethod]
+    public void MapStringLevel2Test()
+    {
+        //Arrange
+        Game game = new(2);
+
+        //Act 
+        string mapString = MapCore.GetMapString(game.Level.Map, true);
+
+        //Arrange
+        string expectedMapString = @"
+W W W W . W W W W 
+W . . . . . . . W 
+W . . . . . . . W 
+W . . . . . . . W 
+W w w w d w w w W 
+W . . . . . . . W 
+W . . . . . . . W 
+W . . . . . . . W 
+W W W W . W W W W 
 ";
         Assert.AreEqual(expectedMapString, mapString);
     }

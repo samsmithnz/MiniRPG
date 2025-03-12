@@ -162,21 +162,42 @@ namespace Assets.Scripts
                 } //end z for
             } //end x for
 
-            //Create the border
-            //load the prefab from the assets/prefab folder
-            GameObject outsideWalls = new GameObject();
-            outsideWalls.name = "OutsideWalls";
-            outsideWalls.transform.parent = parentGameObject.transform;
+         
+            //Create the game objects for the level from the prefabs
+            GameObject levelObjects = new GameObject();
+            levelObjects.name = "LevelObjects";
+            levelObjects.transform.parent = parentGameObject.transform;
             for (int x = 0; x <= width - 1; x++)
             {
                 for (int z = 0; z <= breadth - 1; z++)
                 {
                     if (map[x, z] == "W")
                     {
-                        GameObject borderPrefab = Instantiate(Resources.Load<GameObject>("OutsideWall"));
-                        borderPrefab.transform.position = new Vector3(x - 0.5f, 0, z - 0.5f);
-                        borderPrefab.name = "OutsideWall_" + "x" + x + "_z" + z;
-                        borderPrefab.transform.parent = outsideWalls.transform;
+                        //Create the border
+                        GameObject prefab = Instantiate(Resources.Load<GameObject>("OutsideWall"));
+                        prefab.transform.position = new Vector3(x - 0.5f, 0, z - 0.5f);
+                        prefab.name = "OutsideWall_" + "x" + x + "_z" + z;
+                        prefab.transform.parent = levelObjects.transform;
+                    }
+                    else if (map[x, z] =="w")
+                    {
+                        //Create an internal 'skinny' wall
+                        GameObject prefab = Instantiate(Resources.Load<GameObject>("SkinnyWall"));
+                        prefab.transform.position = new Vector3(x - 0.5f, 0, z - 0.5f);
+                        prefab.name = "InternalSkinnyWall_" + "x" + x + "_z" + z;
+                        prefab.transform.parent = levelObjects.transform;
+                    }
+                    else if (map[x,z] == "d")
+                    {
+                        //Create a 'skinny' door! 
+                        GameObject prefab = Instantiate(Resources.Load<GameObject>("SkinnyDoor"));
+                        prefab.transform.position = new Vector3(x - 0.5f, 0, z - 0.5f);
+                        prefab.name = "InternalSkinnyDoor_" + "x" + x + "_z" + z;
+                        prefab.transform.parent = levelObjects.transform;
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Unknown map object found, of type '" + map[x, z] + "'");
                     }
                 }
             }
