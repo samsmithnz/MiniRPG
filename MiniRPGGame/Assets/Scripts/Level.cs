@@ -31,7 +31,7 @@ namespace Assets.Scripts
             Vector3 startingLocation,
             Vector3 endingLocation)
         {
-            if (map.Length == 0)
+            if (map == null)
             {
                 Debug.LogError("No map found - perhaps this is the end of the road? GAME OVER!!");
             }
