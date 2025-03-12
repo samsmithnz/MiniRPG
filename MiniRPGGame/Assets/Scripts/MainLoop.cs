@@ -39,7 +39,7 @@ namespace Assets.Scripts
 
         private void MoveCharacter(Vector3 location)
         {
-            GameObject character = GameObject.Find("character");
+            GameObject character = GameObject.Find("Character");
             character.transform.position = location;
 
             if (_game.LevelIsComplete())

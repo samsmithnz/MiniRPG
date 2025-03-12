@@ -22,6 +22,10 @@ namespace MiniRPG.Logic
             {
                 Level2();
             }
+            else
+            {
+
+            }
         }
 
         private void Level1()
