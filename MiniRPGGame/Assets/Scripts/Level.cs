@@ -76,22 +76,24 @@ namespace Assets.Scripts
                 textLevel.GetComponent<TextMeshProUGUI>().text = "Level: " + levelNumber.ToString();
             }
             //Draw the map on the screen
-            GameObject floorType = new GameObject();
-            floorType.name = "FloorType";
+            GameObject floorType = new()
+            {
+                name = "FloorType"
+            };
             floorType.transform.parent = parentGameObject.transform;
             for (int x = 0; x <= width - 1; x++)
             {
                 for (int z = 0; z <= breadth - 1; z++)
                 {
                     //Create map floor
-                    GameObject newFloorObject = new GameObject();//.CreatePrimitive(PrimitiveType.Cube);
+                    GameObject newFloorObject = new();//.CreatePrimitive(PrimitiveType.Cube);
                     newFloorObject.transform.position = new Vector3(x, -0.5f, z);
                     newFloorObject.name = Utility.CreateName("floor_type_" + map[x, z], newFloorObject.transform.position);
                     newFloorObject.transform.parent = floorType.transform;
 
                     if (showCoordsOnFloor == true)
                     {
-                        GameObject newFloorCanvasObject = new GameObject
+                        GameObject newFloorCanvasObject = new()
                         {
                             name = "Canvas"
                         };
@@ -101,7 +103,7 @@ namespace Assets.Scripts
                         floorCanvas.renderMode = RenderMode.WorldSpace;
                         floorCanvas.worldCamera = Camera.main;
 
-                        GameObject newFloorTextObject = new GameObject
+                        GameObject newFloorTextObject = new()
                         {
                             name = "Text"
                         };
@@ -162,10 +164,12 @@ namespace Assets.Scripts
                 } //end z for
             } //end x for
 
-         
+
             //Create the game objects for the level from the prefabs
-            GameObject levelObjects = new GameObject();
-            levelObjects.name = "LevelObjects";
+            GameObject levelObjects = new()
+            {
+                name = "LevelObjects"
+            };
             levelObjects.transform.parent = parentGameObject.transform;
             for (int x = 0; x <= width - 1; x++)
             {
@@ -179,7 +183,7 @@ namespace Assets.Scripts
                         prefab.name = "OutsideWall_" + "x" + x + "_z" + z;
                         prefab.transform.parent = levelObjects.transform;
                     }
-                    else if (map[x, z] =="w")
+                    else if (map[x, z] == "w")
                     {
                         //Create an internal 'skinny' wall
                         GameObject prefab = Instantiate(Resources.Load<GameObject>("SkinnyWall"));
@@ -187,7 +191,7 @@ namespace Assets.Scripts
                         prefab.name = "InternalSkinnyWall_" + "x" + x + "_z" + z;
                         prefab.transform.parent = levelObjects.transform;
                     }
-                    else if (map[x,z] == "d")
+                    else if (map[x, z] == "d")
                     {
                         //Create a 'skinny' door! 
                         GameObject prefab = Instantiate(Resources.Load<GameObject>("SkinnyDoor"));
@@ -195,7 +199,7 @@ namespace Assets.Scripts
                         prefab.name = "InternalSkinnyDoor_" + "x" + x + "_z" + z;
                         prefab.transform.parent = levelObjects.transform;
                     }
-                    else
+                    else if (map[x, z] != "");
                     {
                         Debug.LogWarning("Unknown map object found, of type '" + map[x, z] + "'");
                     }
