@@ -31,6 +31,11 @@ namespace Assets.Scripts
             Vector3 startingLocation,
             Vector3 endingLocation)
         {
+            if (map.Length == 0)
+            {
+                Debug.LogError("No map found - perhaps this is the end of the road? GAME OVER!!");
+            }
+
             Font font = Resources.GetBuiltinResource(typeof(Font), "LegacyRuntime.ttf") as Font;
             int width = map.GetLength(0);
             //int height = map.GetLength(1);
