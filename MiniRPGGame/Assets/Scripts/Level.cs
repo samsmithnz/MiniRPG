@@ -47,10 +47,10 @@ namespace Assets.Scripts
             {
                 GameObject.Destroy(floorTypeToDelete);
             }
-            GameObject outsideWallsToDelete = GameObject.Find(name: "OutsideWalls");
-            if (outsideWallsToDelete != null)
+            GameObject levelObjectsToDelete = GameObject.Find(name: "LevelObjects");
+            if (levelObjectsToDelete != null)
             {
-                GameObject.Destroy(outsideWallsToDelete);
+                GameObject.Destroy(levelObjectsToDelete);
             }
             GameObject startAndEndIndicatorsToDelete = GameObject.Find(name: "StartAndEndIndicators");
             if (startAndEndIndicatorsToDelete != null)
@@ -62,6 +62,10 @@ namespace Assets.Scripts
             {
                 GameObject.Destroy(characterToDelete);
             }
+            //if (levelNumber == 2)
+            //{
+            //    return;
+            //}
 
             ////setup the map object and create the map
             //GameObject parentFloor = new GameObject
@@ -199,7 +203,7 @@ namespace Assets.Scripts
                         prefab.name = "InternalSkinnyDoor_" + "x" + x + "_z" + z;
                         prefab.transform.parent = levelObjects.transform;
                     }
-                    else if (map[x, z] != "");
+                    else if (map[x, z] != "")
                     {
                         Debug.LogWarning("Unknown map object found, of type '" + map[x, z] + "'");
                     }

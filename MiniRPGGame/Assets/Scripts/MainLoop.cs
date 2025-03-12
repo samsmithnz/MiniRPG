@@ -15,7 +15,7 @@ namespace Assets.Scripts
 
         void Start()
         {
-                        _buttonNorth = GameObject.Find("ButtonNorth");
+            _buttonNorth = GameObject.Find("ButtonNorth");
             _buttonEast = GameObject.Find("ButtonEast");
             _buttonSouth = GameObject.Find("ButtonSouth");
             _buttonWest = GameObject.Find("ButtonWest");
@@ -27,12 +27,12 @@ namespace Assets.Scripts
         private void SetupGame(int levelNumber)
         {
             _game = new(levelNumber);
-            Level.SetupLevel(gameObject, 
-                _levelNumber, 
-                _game.Level.Map, 
+            Level.SetupLevel(gameObject,
+                _levelNumber,
+                _game.Level.Map,
                 true,
-                true, 
-                Utility.ConvertToUnity3DV3(_game.Level.StartingLocation), 
+                true,
+                Utility.ConvertToUnity3DV3(_game.Level.StartingLocation),
                 Utility.ConvertToUnity3DV3(_game.Level.EndingLocation));
             MoveCharacter(Utility.ConvertToUnity3DV3(_game.Level.StartingLocation));
         }
@@ -45,7 +45,7 @@ namespace Assets.Scripts
             if (_game.LevelIsComplete())
             {
                 _levelNumber++;
-               SetupGame(_levelNumber);
+                SetupGame(_levelNumber);
             }
             else
             {
