@@ -34,6 +34,8 @@ namespace Assets.Scripts
             if (map == null)
             {
                 Debug.LogError("No map found - perhaps this is the end of the road? GAME OVER!!");
+                Application.Quit();
+                return;
             }
 
             Font font = Resources.GetBuiltinResource(typeof(Font), "LegacyRuntime.ttf") as Font;

@@ -34,7 +34,10 @@ namespace Assets.Scripts
                 true,
                 Utility.ConvertToUnity3DV3(_game.Level.StartingLocation),
                 Utility.ConvertToUnity3DV3(_game.Level.EndingLocation));
-            MoveCharacter(Utility.ConvertToUnity3DV3(_game.Level.StartingLocation));
+            if (_game.Level.Map != null)
+            {
+                MoveCharacter(Utility.ConvertToUnity3DV3(_game.Level.StartingLocation));
+            }
         }
 
         private void MoveCharacter(Vector3 location)
