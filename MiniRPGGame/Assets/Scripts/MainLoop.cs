@@ -45,7 +45,7 @@ namespace Assets.Scripts
             if (_game.LevelIsComplete())
             {
                 _levelNumber++;
-                _game = new(_levelNumber);
+               SetupGame(_levelNumber);
             }
             else
             {
