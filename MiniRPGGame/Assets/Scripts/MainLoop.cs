@@ -103,7 +103,7 @@ namespace Assets.Scripts
             Debug.Log("Move North");
             Vector3 newLocation = new(_game.Character.Location.X, _game.Character.Location.Y, _game.Character.Location.Z + 1);
             _game.MoveCharacter(Utility.ConvertToNumericsV3(newLocation));
-            if (_game.Character.Location != Utility.ConvertToNumericsV3(newLocation))
+            if (_game.Character.Location != Utility.ConvertToNumericsV3(GameObject.Find("Character").transform.position))
             {
                 MoveCharacter(newLocation);
             }
