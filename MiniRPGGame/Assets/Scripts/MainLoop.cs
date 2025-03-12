@@ -20,7 +20,7 @@ namespace Assets.Scripts
             _buttonSouth = GameObject.Find("ButtonSouth");
             _buttonWest = GameObject.Find("ButtonWest");
 
-            _levelNumber = 1;
+            _levelNumber = 2;
             SetupGame(_levelNumber);
         }
 
@@ -102,8 +102,24 @@ namespace Assets.Scripts
         {
             Debug.Log("Move North");
             Vector3 newLocation = new(_game.Character.Location.X, _game.Character.Location.Y, _game.Character.Location.Z + 1);
-            _game.Character.Location = Utility.ConvertToNumericsV3(newLocation);
-            MoveCharacter(newLocation);
+            _game.MoveCharacter(Utility.ConvertToNumericsV3(newLocation));
+            if (_game.Character.Location != Utility.ConvertToNumericsV3(newLocation))
+            {
+                MoveCharacter(newLocation);
+            }
+            else if (_game.Level.Map[(int)newLocation.x, (int)newLocation.z] == "D")
+            {
+                //Open the door
+                GameObject doorPrefab = GameObject.Find("InternalSkinnyDoor_x" + newLocation.x + "_z" + newLocation.z);
+                if (doorPrefab != null)
+                {
+                    GameObject door = doorPrefab.transform.Find("SM_Buildings_Door").gameObject;
+                    if (door != null)
+                    {
+                        door.SetActive(false);
+                    }
+                }
+            }
         }
 
         public void MoveEast()

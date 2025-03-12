@@ -44,7 +44,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1024562954466752, guid: e025362a5346a474ba28d4f1c1eee293, type: 3}
       propertyPath: m_Name
-      value: SM_Buildings_Door_01P (1)
+      value: SM_Buildings_Door
       objectReference: {fileID: 0}
     - target: {fileID: 4198256200778946, guid: e025362a5346a474ba28d4f1c1eee293, type: 3}
       propertyPath: m_LocalScale.x
@@ -118,7 +118,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1543033834470240, guid: df0de12ef64f6854ba7a94013ffbff7e, type: 3}
       propertyPath: m_Name
-      value: SM_Buildings_Wall_1x3_01P
+      value: SM_Buildings_Wall_1x3
       objectReference: {fileID: 0}
     - target: {fileID: 4913702675648034, guid: df0de12ef64f6854ba7a94013ffbff7e, type: 3}
       propertyPath: m_LocalScale.x
@@ -192,7 +192,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1609246903973986, guid: 7d1e5b8ce3cce8448811fa721df10782, type: 3}
       propertyPath: m_Name
-      value: SM_Buildings_DoorFrame_01P (1)
+      value: SM_Buildings_DoorFrame
       objectReference: {fileID: 0}
     - target: {fileID: 4067817494309336, guid: 7d1e5b8ce3cce8448811fa721df10782, type: 3}
       propertyPath: m_LocalScale.x

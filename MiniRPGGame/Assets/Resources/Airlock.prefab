@@ -47,7 +47,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1623399650922026, guid: f01cdc6f362babd47ada234fc65a0401, type: 3}
       propertyPath: m_Name
-      value: backDoor
+      value: BackDoor
       objectReference: {fileID: 0}
     - target: {fileID: 4996223375324104, guid: f01cdc6f362babd47ada234fc65a0401, type: 3}
       propertyPath: m_LocalPosition.x
@@ -109,7 +109,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1623399650922026, guid: f01cdc6f362babd47ada234fc65a0401, type: 3}
       propertyPath: m_Name
-      value: frontDoor
+      value: FrontDoor
       objectReference: {fileID: 0}
     - target: {fileID: 4996223375324104, guid: f01cdc6f362babd47ada234fc65a0401, type: 3}
       propertyPath: m_LocalPosition.x
@@ -171,7 +171,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1543033834470240, guid: df0de12ef64f6854ba7a94013ffbff7e, type: 3}
       propertyPath: m_Name
-      value: SM_Buildings_Wall_1x3_01P (1)
+      value: SM_Buildings_Wall_1x3
       objectReference: {fileID: 0}
     - target: {fileID: 4913702675648034, guid: df0de12ef64f6854ba7a94013ffbff7e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -233,7 +233,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1543033834470240, guid: df0de12ef64f6854ba7a94013ffbff7e, type: 3}
       propertyPath: m_Name
-      value: SM_Buildings_Wall_1x3_01P (2)
+      value: SM_Buildings_Wall_1x3
       objectReference: {fileID: 0}
     - target: {fileID: 4913702675648034, guid: df0de12ef64f6854ba7a94013ffbff7e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -295,7 +295,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1962685672368708, guid: ae8ce1c258125ac4db2163e712c99949, type: 3}
       propertyPath: m_Name
-      value: SM_Buildings_WallDoor_2x3_01P (1)
+      value: SM_Buildings_WallDoor_2x3
       objectReference: {fileID: 0}
     - target: {fileID: 4087830480357606, guid: ae8ce1c258125ac4db2163e712c99949, type: 3}
       propertyPath: m_LocalPosition.x
@@ -357,7 +357,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1962685672368708, guid: ae8ce1c258125ac4db2163e712c99949, type: 3}
       propertyPath: m_Name
-      value: SM_Buildings_WallDoor_2x3_01P (2)
+      value: SM_Buildings_WallDoor_2x3
       objectReference: {fileID: 0}
     - target: {fileID: 4087830480357606, guid: ae8ce1c258125ac4db2163e712c99949, type: 3}
       propertyPath: m_LocalPosition.x
