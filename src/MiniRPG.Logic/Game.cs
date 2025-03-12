@@ -5,12 +5,13 @@ namespace MiniRPG.Logic
 {
     public class Game
     {
-        public string[,] Map { get; set; }
+
+        public Level Level { get; set; }
         public Character Character { get; set; }
-        public Game(string[,] map, Vector3 startingLocation)
+        public Game(int levelNumber)
         {
-            Map = map;
-            Character = new Character(startingLocation);
+            Level = new Level(levelNumber);
+            Character = new Character(Level.StartingLocation);
             GetAvailableMoves();
         }
 
@@ -20,16 +21,30 @@ namespace MiniRPG.Logic
             GetAvailableMoves();
         }
 
+        public bool LevelIsComplete()
+        {
+            if (Character.Location == Level.EndingLocation)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public string GetAvailableMoves()
         {
             List<Vector3> availableMoves = new List<Vector3>();
 
-            // Check all around the current character location for possible moves
-            Vector3 NorthLocation = new Vector3(Character.Location.X, 0, Character.Location.Z + 1);
+            bool levelIsComplete = LevelIsComplete();
+
+                // Check all around the current character location for possible moves
+                Vector3 NorthLocation = new Vector3(Character.Location.X, 0, Character.Location.Z + 1);
             Vector3 EastLocation = new Vector3(Character.Location.X + 1, 0, Character.Location.Z);
             Vector3 SouthLocation = new Vector3(Character.Location.X, 0, Character.Location.Z - 1);
             Vector3 WestLocation = new Vector3(Character.Location.X - 1, 0, Character.Location.Z);
-            if (CheckLocationForPossibleMove(NorthLocation))
+            if (!levelIsComplete && CheckLocationForPossibleMove(NorthLocation))
             {
                 availableMoves.Add(NorthLocation);
                 Character.NorthMoveAvailable = true;
@@ -38,7 +53,7 @@ namespace MiniRPG.Logic
             {
                 Character.NorthMoveAvailable = false;
             }
-            if (CheckLocationForPossibleMove(EastLocation))
+            if (!levelIsComplete && CheckLocationForPossibleMove(EastLocation))
             {
                 availableMoves.Add(EastLocation);
                 Character.EastMoveAvailable = true;
@@ -47,7 +62,7 @@ namespace MiniRPG.Logic
             {
                 Character.EastMoveAvailable = false;
             }
-            if (CheckLocationForPossibleMove(SouthLocation))
+            if (!levelIsComplete && CheckLocationForPossibleMove(SouthLocation))
             {
                 availableMoves.Add(SouthLocation);
                 Character.SouthMoveAvailable = true;
@@ -56,7 +71,7 @@ namespace MiniRPG.Logic
             {
                 Character.SouthMoveAvailable = false;
             }
-            if (CheckLocationForPossibleMove(WestLocation))
+            if (!levelIsComplete && CheckLocationForPossibleMove(WestLocation))
             {
                 availableMoves.Add(WestLocation);
                 Character.WestMoveAvailable = true;
@@ -76,13 +91,13 @@ namespace MiniRPG.Logic
         {
             int x = (int)location.X;
             int z = (int)location.Z;
-            if (x < 0 || x >= Map.GetLength(0) || z < 0 || z >= Map.GetLength(1))
+            if (x < 0 || x >= Level.Map.GetLength(0) || z < 0 || z >= Level.Map.GetLength(1))
             {
                 return false;
             }
             else
             {
-                if (Map[(int)location.X, (int)location.Z] == "")
+                if (Level.Map[(int)location.X, (int)location.Z] == "")
                 {
                     return true;
                 }

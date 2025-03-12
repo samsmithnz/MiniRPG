@@ -6,20 +6,13 @@ namespace MiniRPG.Logic
     public class Level
     {
         public int LevelNumber { get; set; }
-        public Character Character { get; set; }
         public Vector3 StartingLocation { get; set; }
         public Vector3 EndingLocation { get; set; }
         public string[,] Map { get; set; }
 
-        public Level(int levelNumber, 
-            Character character, 
-            Vector3 startingLocation,
-            Vector3 endingLocation)
+        public Level(int levelNumber)
         {
             LevelNumber = levelNumber;
-            Character = character;
-            StartingLocation = startingLocation;
-            EndingLocation = endingLocation;
 
             if (levelNumber == 1)
             {
@@ -33,11 +26,11 @@ namespace MiniRPG.Logic
 
         private void Level1()
         {
-            int xMax = 9;
-            int zMax = 9;
+            int xMax = 5;
+            int zMax = 5;
             string[,] map = MapCore.InitializeMap(xMax, zMax);
-            Vector3 startingLocation = new Vector3(4, 0, 0);
-            Vector3 endingLocation = new Vector3(4, 0, 8);
+            Vector3 startingLocation = new Vector3(2, 0, 0);
+            Vector3 endingLocation = new Vector3(2, 0, 4);
 
             //Create the outside walls
             for (int x = 0; x <= xMax - 1; x++)
@@ -55,7 +48,10 @@ namespace MiniRPG.Logic
             map[(int)startingLocation.X, (int)startingLocation.Z] = "";
             map[(int)endingLocation.X, (int)endingLocation.Z] = "";
 
+            //Set the global values for this level
             Map = map;
+            StartingLocation = startingLocation;
+            EndingLocation = endingLocation;
         }
 
         private void Level2() {
@@ -91,7 +87,10 @@ namespace MiniRPG.Logic
             map[(int)startingLocation.X, (int)startingLocation.Z] = "";
             map[(int)endingLocation.X, (int)endingLocation.Z] = "";
 
+            //Set the global values for this level
             Map = map;
+            StartingLocation = startingLocation;
+            EndingLocation = endingLocation;
         }
 
     }
