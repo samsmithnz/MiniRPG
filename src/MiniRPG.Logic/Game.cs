@@ -17,7 +17,15 @@ namespace MiniRPG.Logic
 
         public void MoveCharacter(Vector3 newLocation)
         {
-            Character.Location = newLocation;
+            // if it's a door, open the door instead of moving
+            if (Level.Map[(int)newLocation.X, (int)newLocation.Z] == "d")
+            {
+                Level.Map[(int)newLocation.X, (int)newLocation.Z] = "D";
+            }
+            else
+            {
+                Character.Location = newLocation;
+            }
             GetAvailableMoves();
         }
 
@@ -39,8 +47,8 @@ namespace MiniRPG.Logic
 
             bool levelIsComplete = LevelIsComplete();
 
-                // Check all around the current character location for possible moves
-                Vector3 NorthLocation = new Vector3(Character.Location.X, 0, Character.Location.Z + 1);
+            // Check all around the current character location for possible moves
+            Vector3 NorthLocation = new Vector3(Character.Location.X, 0, Character.Location.Z + 1);
             Vector3 EastLocation = new Vector3(Character.Location.X + 1, 0, Character.Location.Z);
             Vector3 SouthLocation = new Vector3(Character.Location.X, 0, Character.Location.Z - 1);
             Vector3 WestLocation = new Vector3(Character.Location.X - 1, 0, Character.Location.Z);
@@ -97,7 +105,12 @@ namespace MiniRPG.Logic
             }
             else
             {
-                if (Level.Map[(int)location.X, (int)location.Z] == "")
+                if (Level.Map[(int)location.X, (int)location.Z] == "D" || Level.Map[(int)location.X, (int)location.Z] == "d")
+                {
+                    // it's a door, with two states. "D" is closed, "d" is open.
+                    return true;
+                }
+                else if (Level.Map[(int)location.X, (int)location.Z] == "")
                 {
                     return true;
                 }
