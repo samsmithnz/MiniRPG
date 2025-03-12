@@ -15,37 +15,26 @@ namespace Assets.Scripts
 
         void Start()
         {
-            int xMax = 9;
-            int zMax = 9;
-            string[,] map = MapCore.InitializeMap(xMax, zMax);
-            Vector3 startingLocation = new(4, 0, 0);
-            Vector3 endingLocation = new(4, 0, 8);
-
-            //Create the outside walls
-            for (int x = 0; x <= xMax - 1; x++)
-            {
-                for (int z = 0; z <= zMax - 1; z++)
-                {
-                    if (x == 0 || z == 0 || x == xMax - 1 || z == zMax - 1)
-                    {
-                        map[x, z] = "W";
-                    }
-
-                }
-            }
-            //Clear the starting and ending locations
-            map[(int)startingLocation.x, (int)startingLocation.z] = "";
-            map[(int)endingLocation.x, (int)endingLocation.z] = "";
-
-            Level.SetupLevel(gameObject, _levelNumber, map, true, true, startingLocation, endingLocation);
-
-            _buttonNorth = GameObject.Find("ButtonNorth");
+                        _buttonNorth = GameObject.Find("ButtonNorth");
             _buttonEast = GameObject.Find("ButtonEast");
             _buttonSouth = GameObject.Find("ButtonSouth");
             _buttonWest = GameObject.Find("ButtonWest");
 
-            _game = new(map, Utility.ConvertToNumericsV3(startingLocation));
-            MoveCharacter(startingLocation);
+            _levelNumber = 1;
+            SetupGame(_levelNumber);
+        }
+
+        private void SetupGame(int levelNumber)
+        {
+            _game = new(levelNumber);
+            Level.SetupLevel(gameObject, 
+                _levelNumber, 
+                _game.Level.Map, 
+                true,
+                true, 
+                Utility.ConvertToUnity3DV3(_game.Level.StartingLocation), 
+                Utility.ConvertToUnity3DV3(_game.Level.EndingLocation));
+            MoveCharacter(Utility.ConvertToUnity3DV3(_game.Level.StartingLocation));
         }
 
         private void MoveCharacter(Vector3 location)
@@ -53,49 +42,58 @@ namespace Assets.Scripts
             GameObject character = GameObject.Find("character");
             character.transform.position = location;
 
-            Debug.Log("New position: " + _game.GetAvailableMoves());
-            if (_buttonNorth != null)
+            if (_game.LevelIsComplete())
             {
-                if (_game.Character.NorthMoveAvailable)
-                {
-                    _buttonNorth.SetActive(true);
-                }
-                else
-                {
-                    _buttonNorth.SetActive(false);
-                }
+                _levelNumber++;
+                _game = new(_levelNumber);
             }
-            if (_buttonEast != null)
+            else
             {
-                if (_game.Character.EastMoveAvailable)
+
+                Debug.Log("New position: " + _game.GetAvailableMoves());
+                if (_buttonNorth != null)
                 {
-                    _buttonEast.SetActive(true);
+                    if (_game.Character.NorthMoveAvailable)
+                    {
+                        _buttonNorth.SetActive(true);
+                    }
+                    else
+                    {
+                        _buttonNorth.SetActive(false);
+                    }
                 }
-                else
+                if (_buttonEast != null)
                 {
-                    _buttonEast.SetActive(false);
+                    if (_game.Character.EastMoveAvailable)
+                    {
+                        _buttonEast.SetActive(true);
+                    }
+                    else
+                    {
+                        _buttonEast.SetActive(false);
+                    }
                 }
-            }
-            if (_buttonSouth != null)
-            {
-                if (_game.Character.SouthMoveAvailable)
+                if (_buttonSouth != null)
                 {
-                    _buttonSouth.SetActive(true);
+                    if (_game.Character.SouthMoveAvailable)
+                    {
+                        _buttonSouth.SetActive(true);
+                    }
+                    else
+                    {
+                        _buttonSouth.SetActive(false);
+                    }
                 }
-                else
+                if (_buttonWest != null)
                 {
-                    _buttonSouth.SetActive(false);
-                }
-            }
-            if (_buttonWest != null)
-            {
-                if (_game.Character.WestMoveAvailable)
-                {
-                    _buttonWest.SetActive(true);
-                }
-                else
-                {
-                    _buttonWest.SetActive(false);
+                    if (_game.Character.WestMoveAvailable)
+                    {
+                        _buttonWest.SetActive(true);
+                    }
+                    else
+                    {
+                        _buttonWest.SetActive(false);
+                    }
                 }
             }
         }
@@ -103,7 +101,7 @@ namespace Assets.Scripts
         public void MoveNorth()
         {
             Debug.Log("Move North");
-            Vector3 newLocation = new Vector3(_game.Character.Location.X, _game.Character.Location.Y, _game.Character.Location.Z + 1);
+            Vector3 newLocation = new(_game.Character.Location.X, _game.Character.Location.Y, _game.Character.Location.Z + 1);
             _game.Character.Location = Utility.ConvertToNumericsV3(newLocation);
             MoveCharacter(newLocation);
         }
@@ -111,7 +109,7 @@ namespace Assets.Scripts
         public void MoveEast()
         {
             Debug.Log("Move East");
-            Vector3 newLocation = new Vector3(_game.Character.Location.X + 1, _game.Character.Location.Y, _game.Character.Location.Z);
+            Vector3 newLocation = new(_game.Character.Location.X + 1, _game.Character.Location.Y, _game.Character.Location.Z);
             _game.Character.Location = Utility.ConvertToNumericsV3(newLocation);
             MoveCharacter(newLocation);
         }
@@ -119,7 +117,7 @@ namespace Assets.Scripts
         public void MoveSouth()
         {
             Debug.Log("Move South");
-            Vector3 newLocation = new Vector3(_game.Character.Location.X, _game.Character.Location.Y, _game.Character.Location.Z - 1);
+            Vector3 newLocation = new(_game.Character.Location.X, _game.Character.Location.Y, _game.Character.Location.Z - 1);
             _game.Character.Location = Utility.ConvertToNumericsV3(newLocation);
             MoveCharacter(newLocation);
         }
@@ -127,7 +125,7 @@ namespace Assets.Scripts
         public void MoveWest()
         {
             Debug.Log("Move West");
-            Vector3 newLocation = new Vector3(_game.Character.Location.X - 1, _game.Character.Location.Y, _game.Character.Location.Z);
+            Vector3 newLocation = new(_game.Character.Location.X - 1, _game.Character.Location.Y, _game.Character.Location.Z);
             _game.Character.Location = Utility.ConvertToNumericsV3(newLocation);
             MoveCharacter(newLocation);
         }
