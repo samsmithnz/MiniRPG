@@ -93,5 +93,24 @@ namespace MiniRPG.Logic
             EndingLocation = endingLocation;
         }
 
+        public string Level1Board = @"
+WW.WW
+W...W
+W...W
+W...W
+WW.WW
+";
+        public string Level2Board = @"
+WWWW.WWWW
+W.......W
+W.......W
+W.......W
+WwwwdwwwW
+W.......W
+W.......W
+W.......W
+WWWW.WWWW
+";
+
     }
 }

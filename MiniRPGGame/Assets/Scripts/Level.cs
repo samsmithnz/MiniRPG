@@ -25,16 +25,38 @@ namespace Assets.Scripts
 
         public static void SetupLevel(GameObject parentGameObject,
             int levelNumber,
-            string[,] map, 
-            bool showLinesOnFloor, 
-            bool showCoordsOnFloor, 
-            Vector3 startingLocation, 
+            string[,] map,
+            bool showLinesOnFloor,
+            bool showCoordsOnFloor,
+            Vector3 startingLocation,
             Vector3 endingLocation)
         {
             Font font = Resources.GetBuiltinResource(typeof(Font), "LegacyRuntime.ttf") as Font;
             int width = map.GetLength(0);
             //int height = map.GetLength(1);
             int breadth = map.GetLength(1);
+
+            // start by deleting the preview map
+            GameObject floorTypeToDelete = GameObject.Find("FloorType");
+            if (floorTypeToDelete != null)
+            {
+                GameObject.Destroy(floorTypeToDelete);
+            }
+            GameObject outsideWallsToDelete = GameObject.Find(name: "OutsideWalls");
+            if (outsideWallsToDelete != null)
+            {
+                GameObject.Destroy(outsideWallsToDelete);
+            }
+            GameObject startAndEndIndicatorsToDelete = GameObject.Find(name: "StartAndEndIndicators");
+            if (startAndEndIndicatorsToDelete != null)
+            {
+                GameObject.Destroy(startAndEndIndicatorsToDelete);
+            }
+            GameObject characterToDelete = GameObject.Find(name: "Character");
+            if (characterToDelete != null)
+            {
+                GameObject.Destroy(characterToDelete);
+            }
 
             ////setup the map object and create the map
             //GameObject parentFloor = new GameObject
@@ -49,6 +71,9 @@ namespace Assets.Scripts
                 textLevel.GetComponent<TextMeshProUGUI>().text = "Level: " + levelNumber.ToString();
             }
             //Draw the map on the screen
+            GameObject floorType = new GameObject();
+            floorType.name = "FloorType";
+            floorType.transform.parent = parentGameObject.transform;
             for (int x = 0; x <= width - 1; x++)
             {
                 for (int z = 0; z <= breadth - 1; z++)
@@ -57,7 +82,7 @@ namespace Assets.Scripts
                     GameObject newFloorObject = new GameObject();//.CreatePrimitive(PrimitiveType.Cube);
                     newFloorObject.transform.position = new Vector3(x, -0.5f, z);
                     newFloorObject.name = Utility.CreateName("floor_type_" + map[x, z], newFloorObject.transform.position);
-                    newFloorObject.transform.parent = parentGameObject.transform;
+                    newFloorObject.transform.parent = floorType.transform;
 
                     if (showCoordsOnFloor == true)
                     {
@@ -167,7 +192,7 @@ namespace Assets.Scripts
             //Create the character
             GameObject characterObject = GameObject.CreatePrimitive(PrimitiveType.Capsule);
             characterObject.transform.position = startingLocation;
-            characterObject.name = "character";
+            characterObject.name = "Character";
             characterObject.transform.parent = parentGameObject.transform;
             //Add the blue material to the character
             Material blueMaterial = new Material(Shader.Find("Unlit/Color"));
