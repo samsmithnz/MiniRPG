@@ -205,7 +205,7 @@ namespace Assets.Scripts
                     else if (map[x, z] == "a") //Airlock door
                     {
                         GameObject prefab = Instantiate(Resources.Load<GameObject>("Airlock"));
-                        prefab.transform.position = new Vector3(x - 0.5f, 0, z - 0.5f);
+                        prefab.transform.position = new Vector3(x , 0, z );
                         prefab.name = "AirlockDoor_" + "x" + x + "_z" + z;
                         prefab.transform.parent = levelObjects.transform;
                     }
