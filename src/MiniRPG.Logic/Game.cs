@@ -18,9 +18,17 @@ namespace MiniRPG.Logic
         public void MoveCharacter(Vector3 newLocation)
         {
             // if it's a door, open the door instead of moving
-            if (Level.Map[(int)newLocation.X, (int)newLocation.Z] == "d")
+            if (Level.Map[(int)newLocation.X, (int)newLocation.Z] == "d") 
             {
-                Level.Map[(int)newLocation.X, (int)newLocation.Z] = "D";
+                Level.Map[(int)newLocation.X, (int)newLocation.Z] = "D"; //Open door
+            }
+            else if (Level.Map[(int)newLocation.X, (int)newLocation.Z] == "s")
+            {
+                Level.Map[(int)newLocation.X, (int)newLocation.Z] = "S"; //toggle the switch
+            }
+            else if (Level.Map[(int)newLocation.X, (int)newLocation.Z] == "S")
+            {
+                Level.Map[(int)newLocation.X, (int)newLocation.Z] = "s"; //toggle the switch
             }
             else
             {
@@ -108,6 +116,11 @@ namespace MiniRPG.Logic
                 if (Level.Map[(int)location.X, (int)location.Z] == "D" || Level.Map[(int)location.X, (int)location.Z] == "d")
                 {
                     // it's a door, with two states. "D" is closed, "d" is open.
+                    return true;
+                }
+                if (Level.Map[(int)location.X, (int)location.Z] == "S" || Level.Map[(int)location.X, (int)location.Z] == "s")
+                {
+                    // it's a switch, with two states. "S" is state 1, "s" is state 2.
                     return true;
                 }
                 else if (Level.Map[(int)location.X, (int)location.Z] == "")
