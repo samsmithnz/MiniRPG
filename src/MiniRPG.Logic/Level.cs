@@ -123,7 +123,7 @@ namespace MiniRPG.Logic
             map[1, 4] = "W";
             map[2, 4] = "W";
             map[3, 4] = "W";
-            map[4, 4] = "A"; //CLosed Airlock door
+            map[4, 4] = "a"; //CLosed Airlock door
             map[5, 4] = "W";
             map[6, 4] = "W";
             map[7, 4] = "W";

@@ -181,28 +181,39 @@ namespace Assets.Scripts
             {
                 for (int z = 0; z <= breadth - 1; z++)
                 {
-                    if (map[x, z] == "W")
-                    {
-                        //Create the border
+                    if (map[x, z] == "W") //outer border
+                    {                        
                         GameObject prefab = Instantiate(Resources.Load<GameObject>("OutsideWall"));
                         prefab.transform.position = new Vector3(x - 0.5f, 0, z - 0.5f);
                         prefab.name = "OutsideWall_" + "x" + x + "_z" + z;
                         prefab.transform.parent = levelObjects.transform;
                     }
-                    else if (map[x, z] == "w")
+                    else if (map[x, z] == "w") //internal 'skinny' wall 
                     {
-                        //Create an internal 'skinny' wall
                         GameObject prefab = Instantiate(Resources.Load<GameObject>("SkinnyWall"));
                         prefab.transform.position = new Vector3(x - 0.5f, 0, z - 0.5f);
                         prefab.name = "InternalSkinnyWall_" + "x" + x + "_z" + z;
                         prefab.transform.parent = levelObjects.transform;
                     }
-                    else if (map[x, z] == "d")
+                    else if (map[x, z] == "d") //internal 'skinny door
                     {
-                        //Create a 'skinny' door! 
                         GameObject prefab = Instantiate(Resources.Load<GameObject>("SkinnyDoor"));
                         prefab.transform.position = new Vector3(x - 0.5f, 0, z - 0.5f);
                         prefab.name = "InternalSkinnyDoor_" + "x" + x + "_z" + z;
+                        prefab.transform.parent = levelObjects.transform;
+                    }
+                    else if (map[x, z] == "a") //Airlock door
+                    {
+                        GameObject prefab = Instantiate(Resources.Load<GameObject>("Airlock"));
+                        prefab.transform.position = new Vector3(x - 0.5f, 0, z - 0.5f);
+                        prefab.name = "AirlockDoor_" + "x" + x + "_z" + z;
+                        prefab.transform.parent = levelObjects.transform;
+                    }
+                    else if (map[x, z] == "s") //Switch toggle
+                    {
+                        GameObject prefab = Instantiate(Resources.Load<GameObject>("Switch"));
+                        prefab.transform.position = new Vector3(x - 0.5f, 0, z - 0.5f);
+                        prefab.name = "Switch_" + "x" + x + "_z" + z;
                         prefab.transform.parent = levelObjects.transform;
                     }
                     else if (map[x, z] != "")
