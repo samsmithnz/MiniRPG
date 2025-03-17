@@ -169,5 +169,27 @@ W.......W
 WWWW.WWWW
 ";
 
+        public string[,] ProcessLevelBoard(string levelBoard)
+        {
+            // Split the board string into lines
+            string[] lines = levelBoard.Trim().Split('\n');
+            int rows = lines.Length;
+            int cols = lines[0].Trim().Length;
+
+            // Initialize the 2D array
+            string[,] boardArray = new string[rows, cols];
+
+            // Fill the 2D array with characters from the board string
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    boardArray[i, j] = lines[i][j].ToString();
+                }
+            }
+
+            return boardArray;
+        }
+
     }
 }
