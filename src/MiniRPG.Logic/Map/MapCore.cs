@@ -76,7 +76,7 @@ namespace MiniRPG.Logic.Map
             foreach (KeyValuePair<Vector3, string> item in tileTypeList)
             {
                 //Check that the square is empty - we don't want to overwrite something that exists and only put a tile on an unused tile
-                if (map[(int)item.Key.X, (int)item.Key.Z] == "")
+                if (map[(int)item.Key.X, (int)item.Key.Z] == MapTileType.MapTileType_EmptyTile)
                 {
                     map[(int)item.Key.X, (int)item.Key.Z] = item.Value;
                 }

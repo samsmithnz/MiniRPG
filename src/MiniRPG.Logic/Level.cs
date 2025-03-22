@@ -45,14 +45,14 @@ namespace MiniRPG.Logic
                 {
                     if (x == 0 || z == 0 || x == xMax - 1 || z == zMax - 1)
                     {
-                        map[x, z] = "W"; //Outer wall
+                        map[x, z] = MapTileType.MapTileType_WallInner; //Outer wall
                     }
 
                 }
             }
             //Clear the starting and ending locations
-            map[(int)startingLocation.X, (int)startingLocation.Z] = "";
-            map[(int)endingLocation.X, (int)endingLocation.Z] = "";
+            map[(int)startingLocation.X, (int)startingLocation.Z] = MapTileType.MapTileType_EmptyTile;
+            map[(int)endingLocation.X, (int)endingLocation.Z] = MapTileType.MapTileType_EmptyTile;
 
             //Set the global values for this level
             Map = map;
@@ -60,7 +60,8 @@ namespace MiniRPG.Logic
             EndingLocation = endingLocation;
         }
 
-        private void Level2() {
+        private void Level2()
+        {
             int xMax = 9;
             int zMax = 9;
             string[,] map = MapCore.InitializeMap(xMax, zMax);
@@ -74,24 +75,24 @@ namespace MiniRPG.Logic
                 {
                     if (x == 0 || z == 0 || x == xMax - 1 || z == zMax - 1)
                     {
-                        map[x, z] = "W";
+                        map[x, z] = MapTileType.MapTileType_WallInner;
                     }
 
                 }
             }
 
             //Create an inner wall with a door in the middle
-            map[1, 4] = "w";
-            map[2, 4] = "w";
-            map[3, 4] = "w";
-            map[4, 4] = "d"; //closed inner door (open inner door is "D")
-            map[5, 4] = "w";
-            map[6, 4] = "w";
-            map[7, 4] = "w";
+            map[1, 4] = MapTileType.MapTileType_WallInner;
+            map[2, 4] = MapTileType.MapTileType_WallInner;
+            map[3, 4] = MapTileType.MapTileType_WallInner;
+            map[4, 4] = MapTileType.MapTileType_DoorClosed; //closed inner door 
+            map[5, 4] = MapTileType.MapTileType_WallInner;
+            map[6, 4] = MapTileType.MapTileType_WallInner;
+            map[7, 4] = MapTileType.MapTileType_WallInner;
 
             //Clear the starting and ending locations
-            map[(int)startingLocation.X, (int)startingLocation.Z] = "";
-            map[(int)endingLocation.X, (int)endingLocation.Z] = "";
+            map[(int)startingLocation.X, (int)startingLocation.Z] = MapTileType.MapTileType_EmptyTile;
+            map[(int)endingLocation.X, (int)endingLocation.Z] = MapTileType.MapTileType_EmptyTile;
 
             //Set the global values for this level
             Map = map;
@@ -99,7 +100,8 @@ namespace MiniRPG.Logic
             EndingLocation = endingLocation;
         }
 
-        private void Level3() {
+        private void Level3()
+        {
             int xMax = 9;
             int zMax = 9;
             string[,] map = MapCore.InitializeMap(xMax, zMax);
@@ -113,25 +115,25 @@ namespace MiniRPG.Logic
                 {
                     if (x == 0 || z == 0 || x == xMax - 1 || z == zMax - 1)
                     {
-                        map[x, z] = "W";
+                        map[x, z] = MapTileType.MapTileType_WallInner;
                     }
 
                 }
             }
 
             //Create an inner wall with a door in the middle
-            map[1, 4] = "W";
-            map[2, 4] = "W";
-            map[3, 4] = "W";
+            map[1, 4] = MapTileType.MapTileType_WallInner;
+            map[2, 4] = MapTileType.MapTileType_WallInner;
+            map[3, 4] = MapTileType.MapTileType_WallInner;
             map[4, 4] = "a"; //CLosed Airlock door
-            map[5, 4] = "W";
-            map[6, 4] = "W";
-            map[7, 4] = "W";
-            map[5, 3] = "s"; //Switch in off position (on position is "S")
+            map[5, 4] = MapTileType.MapTileType_WallInner;
+            map[6, 4] = MapTileType.MapTileType_WallInner;
+            map[7, 4] = MapTileType.MapTileType_WallInner;
+            map[5, 3] = MapTileType.MapTileType_SwitchClosed; //Switch in off position (on position is "S")
 
             //Clear the starting and ending locations
-            map[(int)startingLocation.X, (int)startingLocation.Z] = "";
-            map[(int)endingLocation.X, (int)endingLocation.Z] = "";
+            map[(int)startingLocation.X, (int)startingLocation.Z] = MapTileType.MapTileType_EmptyTile;
+            map[(int)endingLocation.X, (int)endingLocation.Z] = MapTileType.MapTileType_EmptyTile;
 
             //Set the global values for this level
             Map = map;
@@ -151,7 +153,7 @@ WWWW.WWWW
 W.......W
 W.......W
 W.......W
-WwwwdwwwW
+WWWWdWWWW
 W.......W
 W.......W
 W.......W
@@ -162,9 +164,20 @@ WWWW.WWWW
 W.......W
 W.......W
 W.......W
-WWWWAWWWW
+WWWWaWWWW
 W....s..W
 W.......W
+W.......W
+WWWW.WWWW
+";
+        public string Level4Board = @"
+WWWW.WWWW
+W.......W
+W.......W
+W.WWaWW.W
+WWWs..WWW
+W.WWaWW.W
+W....s..W
 W.......W
 WWWW.WWWW
 ";

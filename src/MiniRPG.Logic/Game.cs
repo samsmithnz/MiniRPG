@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using MiniRPG.Logic.Map;
+using System.Collections.Generic;
 using System.Numerics;
 
 namespace MiniRPG.Logic
@@ -18,17 +19,17 @@ namespace MiniRPG.Logic
         public void MoveCharacter(Vector3 newLocation)
         {
             // if it's a door, open the door instead of moving
-            if (Level.Map[(int)newLocation.X, (int)newLocation.Z] == "d") 
+            if (Level.Map[(int)newLocation.X, (int)newLocation.Z] == MapTileType.MapTileType_DoorClosed) 
             {
-                Level.Map[(int)newLocation.X, (int)newLocation.Z] = "D"; //Open door
+                Level.Map[(int)newLocation.X, (int)newLocation.Z] = MapTileType.MapTileType_DoorOpen; //Open door
             }
-            else if (Level.Map[(int)newLocation.X, (int)newLocation.Z] == "s")
+            else if (Level.Map[(int)newLocation.X, (int)newLocation.Z] == MapTileType.MapTileType_SwitchClosed)
             {
-                Level.Map[(int)newLocation.X, (int)newLocation.Z] = "S"; //toggle the switch
+                Level.Map[(int)newLocation.X, (int)newLocation.Z] = MapTileType.MapTileType_SwitchOpen; //toggle the switch
             }
-            else if (Level.Map[(int)newLocation.X, (int)newLocation.Z] == "S")
+            else if (Level.Map[(int)newLocation.X, (int)newLocation.Z] == MapTileType.MapTileType_SwitchOpen)
             {
-                Level.Map[(int)newLocation.X, (int)newLocation.Z] = "s"; //toggle the switch
+                Level.Map[(int)newLocation.X, (int)newLocation.Z] = MapTileType.MapTileType_SwitchClosed; //toggle the switch
             }
             else
             {
@@ -113,17 +114,17 @@ namespace MiniRPG.Logic
             }
             else
             {
-                if (Level.Map[(int)location.X, (int)location.Z] == "D" || Level.Map[(int)location.X, (int)location.Z] == "d")
+                if (Level.Map[(int)location.X, (int)location.Z] == MapTileType.MapTileType_DoorOpen || Level.Map[(int)location.X, (int)location.Z] == MapTileType.MapTileType_DoorClosed)
                 {
-                    // it's a door, with two states. "D" is closed, "d" is open.
+                    // it's a door, with two states, open and closed
                     return true;
                 }
-                if (Level.Map[(int)location.X, (int)location.Z] == "S" || Level.Map[(int)location.X, (int)location.Z] == "s")
+                if (Level.Map[(int)location.X, (int)location.Z] == MapTileType.MapTileType_SwitchClosed || Level.Map[(int)location.X, (int)location.Z] == MapTileType.MapTileType_SwitchOpen)
                 {
-                    // it's a switch, with two states. "S" is state 1, "s" is state 2.
+                    // it's a switch, with two states, open and closed
                     return true;
                 }
-                else if (Level.Map[(int)location.X, (int)location.Z] == "")
+                else if (Level.Map[(int)location.X, (int)location.Z] == MapTileType.MapTileType_EmptyTile)
                 {
                     return true;
                 }
