@@ -45,7 +45,7 @@ namespace MiniRPG.Logic
                 {
                     if (x == 0 || z == 0 || x == xMax - 1 || z == zMax - 1)
                     {
-                        map[x, z] = MapTileType.MapTileType_WallInner; //Outer wall
+                        map[x, z] = MapTileType.MapTileType_WallOuter; //Outer wall
                     }
 
                 }
@@ -75,7 +75,7 @@ namespace MiniRPG.Logic
                 {
                     if (x == 0 || z == 0 || x == xMax - 1 || z == zMax - 1)
                     {
-                        map[x, z] = MapTileType.MapTileType_WallInner;
+                        map[x, z] = MapTileType.MapTileType_WallOuter;
                     }
 
                 }
