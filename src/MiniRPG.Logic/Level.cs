@@ -115,7 +115,7 @@ namespace MiniRPG.Logic
                 {
                     if (x == 0 || z == 0 || x == xMax - 1 || z == zMax - 1)
                     {
-                        map[x, z] = MapTileType.MapTileType_WallInner;
+                        map[x, z] = MapTileType.MapTileType_WallOuter;
                     }
 
                 }
@@ -125,7 +125,7 @@ namespace MiniRPG.Logic
             map[1, 4] = MapTileType.MapTileType_WallInner;
             map[2, 4] = MapTileType.MapTileType_WallInner;
             map[3, 4] = MapTileType.MapTileType_WallInner;
-            map[4, 4] = "a"; //CLosed Airlock door
+            map[4, 4] = MapTileType.MapTileType_DoorLocked; //Locked door
             map[5, 4] = MapTileType.MapTileType_WallInner;
             map[6, 4] = MapTileType.MapTileType_WallInner;
             map[7, 4] = MapTileType.MapTileType_WallInner;

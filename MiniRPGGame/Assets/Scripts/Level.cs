@@ -181,35 +181,35 @@ namespace Assets.Scripts
             {
                 for (int z = 0; z <= breadth - 1; z++)
                 {
-                    if (map[x, z] == "W") //outer border
+                    if (map[x, z] == MiniRPG.Logic.Map.MapTileType.MapTileType_WallOuter) //outer border
                     {                        
                         GameObject prefab = Instantiate(Resources.Load<GameObject>("OutsideWall"));
                         prefab.transform.position = new Vector3(x - 0.5f, 0, z - 0.5f);
                         prefab.name = "OutsideWall_" + "x" + x + "_z" + z;
                         prefab.transform.parent = levelObjects.transform;
                     }
-                    else if (map[x, z] == "w") //internal 'skinny' wall 
+                    else if (map[x, z] == MiniRPG.Logic.Map.MapTileType.MapTileType_WallInner) //internal 'skinny' wall 
                     {
                         GameObject prefab = Instantiate(Resources.Load<GameObject>("SkinnyWall"));
                         prefab.transform.position = new Vector3(x - 0.5f, 0, z - 0.5f);
                         prefab.name = "InternalSkinnyWall_" + "x" + x + "_z" + z;
                         prefab.transform.parent = levelObjects.transform;
                     }
-                    else if (map[x, z] == "d") //internal 'skinny door
+                    else if (map[x, z] == MiniRPG.Logic.Map.MapTileType.MapTileType_DoorClosed) //internal 'skinny door
                     {
                         GameObject prefab = Instantiate(Resources.Load<GameObject>("SkinnyDoor"));
                         prefab.transform.position = new Vector3(x - 0.5f, 0, z - 0.5f);
                         prefab.name = "InternalSkinnyDoor_" + "x" + x + "_z" + z;
                         prefab.transform.parent = levelObjects.transform;
                     }
-                    else if (map[x, z] == "a") //Airlock door
-                    {
-                        GameObject prefab = Instantiate(Resources.Load<GameObject>("Airlock"));
-                        prefab.transform.position = new Vector3(x , 0, z );
-                        prefab.name = "AirlockDoor_" + "x" + x + "_z" + z;
-                        prefab.transform.parent = levelObjects.transform;
-                    }
-                    else if (map[x, z] == "s") //Switch toggle
+                    //else if (map[x, z] == MiniRPG.Logic.Map.MapTileType.MapTileType_DoorLocked) //Airlock door
+                    //{
+                    //    GameObject prefab = Instantiate(Resources.Load<GameObject>("Airlock"));
+                    //    prefab.transform.position = new Vector3(x , 0, z );
+                    //    prefab.name = "AirlockDoor_" + "x" + x + "_z" + z;
+                    //    prefab.transform.parent = levelObjects.transform;
+                    //}
+                    else if (map[x, z] == MiniRPG.Logic.Map.MapTileType.MapTileType_SwitchClosed) //Switch toggle
                     {
                         GameObject prefab = Instantiate(Resources.Load<GameObject>("Switch"));
                         prefab.transform.position = new Vector3(x - 0.5f, 0, z - 0.5f);

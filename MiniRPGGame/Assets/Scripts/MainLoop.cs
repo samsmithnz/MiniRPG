@@ -1,5 +1,6 @@
 ﻿using MiniRPG.Logic;
 using MiniRPG.Logic.Map;
+using TMPro;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -53,12 +54,18 @@ namespace Assets.Scripts
             else
             {
 
-                Debug.Log("New position: " + _game.GetAvailableMoves());
+                //Debug.Log("New position: " + _game.GetAvailableMoves());
                 if (_buttonNorth != null)
                 {
-                    if (_game.Character.NorthMoveAvailable)
+                    if (_game.Character.NorthMove != null)
                     {
                         _buttonNorth.SetActive(true);
+                        //Update the button text
+                        GameObject buttonNorthText = _buttonNorth.transform.GetChild(0).gameObject;
+                        if (buttonNorthText != null)
+                        {
+                            buttonNorthText.GetComponent<TextMeshPro>().text = _game.Character.NorthMove.ActionName;
+                        }
                     }
                     else
                     {
@@ -67,9 +74,15 @@ namespace Assets.Scripts
                 }
                 if (_buttonEast != null)
                 {
-                    if (_game.Character.EastMoveAvailable)
+                    if (_game.Character.EastMove != null)
                     {
                         _buttonEast.SetActive(true);
+                        //Update the button text
+                        GameObject buttonEastText = _buttonEast.transform.GetChild(0).gameObject;
+                        if (buttonEastText != null)
+                        {
+                            buttonEastText.GetComponent<TextMeshPro>().text = _game.Character.EastMove.ActionName;
+                        }
                     }
                     else
                     {
@@ -78,9 +91,15 @@ namespace Assets.Scripts
                 }
                 if (_buttonSouth != null)
                 {
-                    if (_game.Character.SouthMoveAvailable)
+                    if (_game.Character.SouthMove != null)
                     {
                         _buttonSouth.SetActive(true);
+                        //Update the button text
+                        GameObject buttonSouthText = _buttonSouth.transform.GetChild(0).gameObject;
+                        if (buttonSouthText != null)
+                        {
+                            buttonSouthText.GetComponent<TextMeshPro>().text = _game.Character.SouthMove.ActionName;
+                        }
                     }
                     else
                     {
@@ -89,9 +108,15 @@ namespace Assets.Scripts
                 }
                 if (_buttonWest != null)
                 {
-                    if (_game.Character.WestMoveAvailable)
+                    if (_game.Character.WestMove != null)
                     {
                         _buttonWest.SetActive(true);
+                        //Update the button text
+                        GameObject buttonWestText = _buttonWest.transform.GetChild(0).gameObject;
+                        if (buttonWestText != null)
+                        {
+                            buttonWestText.GetComponent<TextMeshPro>().text = _game.Character.WestMove.ActionName;
+                        }
                     }
                     else
                     {
