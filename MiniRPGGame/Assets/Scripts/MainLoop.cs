@@ -21,7 +21,7 @@ namespace Assets.Scripts
             _buttonSouth = GameObject.Find("ButtonSouth");
             _buttonWest = GameObject.Find("ButtonWest");
 
-            _levelNumber = 3;
+            _levelNumber = 1;
             SetupGame(_levelNumber);
         }
 
@@ -53,7 +53,6 @@ namespace Assets.Scripts
             }
             else
             {
-
                 //Debug.Log("New position: " + _game.GetAvailableMoves());
                 if (_buttonNorth != null)
                 {
@@ -61,10 +60,11 @@ namespace Assets.Scripts
                     {
                         _buttonNorth.SetActive(true);
                         //Update the button text
+                        SetButtonText(_buttonNorth, _game.Character.NorthMove.ActionName);
                         GameObject buttonNorthText = _buttonNorth.transform.GetChild(0).gameObject;
                         if (buttonNorthText != null)
                         {
-                            buttonNorthText.GetComponent<TextMeshPro>().text = _game.Character.NorthMove.ActionName;
+                            buttonNorthText.GetComponent<TextMeshProUGUI>().text = _game.Character.NorthMove.ActionName;
                         }
                     }
                     else
@@ -81,7 +81,7 @@ namespace Assets.Scripts
                         GameObject buttonEastText = _buttonEast.transform.GetChild(0).gameObject;
                         if (buttonEastText != null)
                         {
-                            buttonEastText.GetComponent<TextMeshPro>().text = _game.Character.EastMove.ActionName;
+                            buttonEastText.GetComponent<TextMeshProUGUI>().text = _game.Character.EastMove.ActionName;
                         }
                     }
                     else
@@ -98,7 +98,7 @@ namespace Assets.Scripts
                         GameObject buttonSouthText = _buttonSouth.transform.GetChild(0).gameObject;
                         if (buttonSouthText != null)
                         {
-                            buttonSouthText.GetComponent<TextMeshPro>().text = _game.Character.SouthMove.ActionName;
+                            buttonSouthText.GetComponent<TextMeshProUGUI>().text = _game.Character.SouthMove.ActionName;
                         }
                     }
                     else
@@ -115,7 +115,7 @@ namespace Assets.Scripts
                         GameObject buttonWestText = _buttonWest.transform.GetChild(0).gameObject;
                         if (buttonWestText != null)
                         {
-                            buttonWestText.GetComponent<TextMeshPro>().text = _game.Character.WestMove.ActionName;
+                            buttonWestText.GetComponent<TextMeshProUGUI>().text = _game.Character.WestMove.ActionName;
                         }
                     }
                     else
@@ -128,50 +128,162 @@ namespace Assets.Scripts
 
         public void MoveNorth()
         {
-            Debug.Log("Move North");
+            Debug.Log(GetButtonText(_buttonNorth) + " starting at " + _game.Character.Location.ToString());
             Vector3 newLocation = new(_game.Character.Location.X, _game.Character.Location.Y, _game.Character.Location.Z + 1);
-            _game.MoveCharacter(Utility.ConvertToNumericsV3(newLocation));
-            if (_game.Character.Location != Utility.ConvertToNumericsV3(GameObject.Find("Character").transform.position))
+            if (_game.Character.NorthMove != null)
             {
-                MoveCharacter(newLocation);
-            }
-            else if (_game.Level.Map[(int)newLocation.x, (int)newLocation.z] == "D")
-            {
-                //Open the door
-                GameObject doorPrefab = GameObject.Find("InternalSkinnyDoor_x" + newLocation.x + "_z" + newLocation.z);
-                if (doorPrefab != null)
+                if (_game.Character.NorthMove.IsMove)
                 {
-                    GameObject door = doorPrefab.transform.Find("SM_Buildings_Door").gameObject;
-                    if (door != null)
+                    _game.MoveCharacter(Utility.ConvertToNumericsV3(newLocation));
+                    MoveCharacter(newLocation);
+                }
+                else if (_game.Character.NorthMove.IsAction)
+                {
+                    if (_game.Level.Map[(int)newLocation.x, (int)newLocation.z] == MapTileType.MapTileType_DoorClosed)
                     {
-                        door.SetActive(false);
+                        //Open the door
+                        GameObject doorPrefab = GameObject.Find("InternalSkinnyDoor_x" + newLocation.x + "_z" + newLocation.z);
+                        if (doorPrefab != null)
+                        {
+                            GameObject door = doorPrefab.transform.Find("SM_Buildings_Door").gameObject;
+                            if (door != null)
+                            {
+                                door.SetActive(false);
+                            }
+                        }
+                        _game.MoveCharacter(Utility.ConvertToNumericsV3(newLocation));
+                        MoveCharacter(new(_game.Character.Location.X, _game.Character.Location.Y, _game.Character.Location.Z));
                     }
                 }
             }
+            Debug.Log(GetButtonText(_buttonNorth) + " ending at " + _game.Character.Location.ToString());
         }
 
         public void MoveEast()
         {
-            Debug.Log("Move East");
+            Debug.Log(GetButtonText(_buttonEast) + " starting at " + _game.Character.Location.ToString());
             Vector3 newLocation = new(_game.Character.Location.X + 1, _game.Character.Location.Y, _game.Character.Location.Z);
-            _game.Character.Location = Utility.ConvertToNumericsV3(newLocation);
-            MoveCharacter(newLocation);
+            if (_game.Character.EastMove != null)
+            {
+                if (_game.Character.EastMove.IsMove)
+                {
+                    _game.MoveCharacter(Utility.ConvertToNumericsV3(newLocation));
+                    MoveCharacter(newLocation);
+                }
+                else if (_game.Character.EastMove.IsAction)
+                {
+                    if (_game.Level.Map[(int)newLocation.x, (int)newLocation.z] == MapTileType.MapTileType_DoorClosed)
+                    {
+                        //Open the door
+                        GameObject doorPrefab = GameObject.Find("InternalSkinnyDoor_x" + newLocation.x + "_z" + newLocation.z);
+                        if (doorPrefab != null)
+                        {
+                            GameObject door = doorPrefab.transform.Find("SM_Buildings_Door").gameObject;
+                            if (door != null)
+                            {
+                                door.SetActive(false);
+                            }
+                        }
+                        _game.MoveCharacter(Utility.ConvertToNumericsV3(newLocation));
+                        MoveCharacter(new(_game.Character.Location.X, _game.Character.Location.Y, _game.Character.Location.Z));
+                    }
+                }
+            }
+
+            //_game.Character.Location = Utility.ConvertToNumericsV3(newLocation);
+            //MoveCharacter(newLocation);
+            Debug.Log(GetButtonText(_buttonEast) + " ending at " + _game.Character.Location.ToString());
         }
 
         public void MoveSouth()
         {
-            Debug.Log("Move South");
+            Debug.Log(GetButtonText(_buttonSouth) + " starting at " + _game.Character.Location.ToString());
             Vector3 newLocation = new(_game.Character.Location.X, _game.Character.Location.Y, _game.Character.Location.Z - 1);
-            _game.Character.Location = Utility.ConvertToNumericsV3(newLocation);
-            MoveCharacter(newLocation);
+            if (_game.Character.SouthMove != null)
+            {
+                if (_game.Character.SouthMove.IsMove)
+                {
+                    _game.MoveCharacter(Utility.ConvertToNumericsV3(newLocation));
+                    MoveCharacter(newLocation);
+                }
+                else if (_game.Character.SouthMove.IsAction)
+                {
+                    if (_game.Level.Map[(int)newLocation.x, (int)newLocation.z] == MapTileType.MapTileType_DoorClosed)
+                    {
+                        //Open the door
+                        GameObject doorPrefab = GameObject.Find("InternalSkinnyDoor_x" + newLocation.x + "_z" + newLocation.z);
+                        if (doorPrefab != null)
+                        {
+                            GameObject door = doorPrefab.transform.Find("SM_Buildings_Door").gameObject;
+                            if (door != null)
+                            {
+                                door.SetActive(false);
+                            }
+                        }
+                        _game.MoveCharacter(Utility.ConvertToNumericsV3(newLocation));
+                        MoveCharacter(new(_game.Character.Location.X, _game.Character.Location.Y, _game.Character.Location.Z));
+                    }
+                }
+            }
+
+            //_game.Character.Location = Utility.ConvertToNumericsV3(newLocation);
+            //MoveCharacter(newLocation);
+            Debug.Log(GetButtonText(_buttonSouth) + " ending at " + _game.Character.Location.ToString());
         }
 
         public void MoveWest()
         {
-            Debug.Log("Move West");
+            Debug.Log(GetButtonText(_buttonWest) + " starting at " + _game.Character.Location.ToString());
             Vector3 newLocation = new(_game.Character.Location.X - 1, _game.Character.Location.Y, _game.Character.Location.Z);
-            _game.Character.Location = Utility.ConvertToNumericsV3(newLocation);
-            MoveCharacter(newLocation);
+            if (_game.Character.WestMove != null)
+            {
+                if (_game.Character.WestMove.IsMove)
+                {
+                    _game.MoveCharacter(Utility.ConvertToNumericsV3(newLocation));
+                    MoveCharacter(newLocation);
+                }
+                else if (_game.Character.WestMove.IsAction)
+                {
+                    if (_game.Level.Map[(int)newLocation.x, (int)newLocation.z] == MapTileType.MapTileType_DoorClosed)
+                    {
+                        //Open the door
+                        GameObject doorPrefab = GameObject.Find("InternalSkinnyDoor_x" + newLocation.x + "_z" + newLocation.z);
+                        if (doorPrefab != null)
+                        {
+                            GameObject door = doorPrefab.transform.Find("SM_Buildings_Door").gameObject;
+                            if (door != null)
+                            {
+                                door.SetActive(false);
+                            }
+                        }
+                        _game.MoveCharacter(Utility.ConvertToNumericsV3(newLocation));
+                        MoveCharacter(new(_game.Character.Location.X, _game.Character.Location.Y, _game.Character.Location.Z));
+                    }
+                }
+            }
+
+            //_game.Character.Location = Utility.ConvertToNumericsV3(newLocation);
+            //MoveCharacter(newLocation);
+            Debug.Log(GetButtonText(_buttonWest) + " ending at " + _game.Character.Location.ToString());
+        }
+
+        private void SetButtonText(GameObject button, string buttonText)
+        {
+            GameObject buttonTextObject = button.transform.GetChild(0).gameObject;
+            if (buttonText != null)
+            {
+                buttonTextObject.GetComponent<TextMeshProUGUI>().text = buttonText;
+            }
+        }
+
+        private string GetButtonText(GameObject button)
+        {
+            GameObject buttonTextObject = button.transform.GetChild(0).gameObject;
+            if (buttonTextObject != null)
+            {
+                return buttonTextObject.GetComponent<TextMeshProUGUI>().text;
+            }
+            return "";
         }
 
         //capture key presses to move north when w or arrow is pressed

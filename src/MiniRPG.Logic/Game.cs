@@ -1,5 +1,7 @@
 ﻿using MiniRPG.Logic.Map;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Numerics;
 using static MiniRPG.Logic.Map.CharacterAction;
 
@@ -21,7 +23,7 @@ namespace MiniRPG.Logic
         {
             // if it's a door, open the door instead of moving
             if (Level.Map[(int)newLocation.X, (int)newLocation.Z] == MapTileType.MapTileType_DoorClosed)
-            {
+            {                
                 Level.Map[(int)newLocation.X, (int)newLocation.Z] = MapTileType.MapTileType_DoorOpen; //Open door
             }
             else if (Level.Map[(int)newLocation.X, (int)newLocation.Z] == MapTileType.MapTileType_SwitchClosed)
@@ -89,7 +91,7 @@ namespace MiniRPG.Logic
                 if (Level.Map[(int)location.X, (int)location.Z] == MapTileType.MapTileType_DoorOpen)
                 {
                     // it's an open door, that will be closed
-                    return new CharacterAction(false, location, true, "Close door", direction);
+                    return new CharacterAction(true, location, false, direction.ToString(), direction);
                 }
                 else if (Level.Map[(int)location.X, (int)location.Z] == MapTileType.MapTileType_DoorClosed)
                 {
