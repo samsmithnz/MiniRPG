@@ -1,6 +1,7 @@
 ﻿using MiniRPG.Logic.Map;
 using System.Collections.Generic;
 using System.Numerics;
+using static MiniRPG.Logic.Map.CharacterAction;
 
 namespace MiniRPG.Logic
 {
@@ -13,13 +14,13 @@ namespace MiniRPG.Logic
         {
             Level = new Level(levelNumber);
             Character = new Character(Level.StartingLocation);
-            GetAvailableMoves();
+            GetCharacterAvailableMoves();
         }
 
         public void MoveCharacter(Vector3 newLocation)
         {
             // if it's a door, open the door instead of moving
-            if (Level.Map[(int)newLocation.X, (int)newLocation.Z] == MapTileType.MapTileType_DoorClosed) 
+            if (Level.Map[(int)newLocation.X, (int)newLocation.Z] == MapTileType.MapTileType_DoorClosed)
             {
                 Level.Map[(int)newLocation.X, (int)newLocation.Z] = MapTileType.MapTileType_DoorOpen; //Open door
             }
@@ -35,7 +36,7 @@ namespace MiniRPG.Logic
             {
                 Character.Location = newLocation;
             }
-            GetAvailableMoves();
+            GetCharacterAvailableMoves();
         }
 
         public bool LevelIsComplete()
@@ -50,87 +51,68 @@ namespace MiniRPG.Logic
             }
         }
 
-        public string GetAvailableMoves()
+        public void GetCharacterAvailableMoves()
         {
-            List<Vector3> availableMoves = new List<Vector3>();
-
             bool levelIsComplete = LevelIsComplete();
 
-            // Check all around the current character location for possible moves
-            Vector3 NorthLocation = new Vector3(Character.Location.X, 0, Character.Location.Z + 1);
-            Vector3 EastLocation = new Vector3(Character.Location.X + 1, 0, Character.Location.Z);
-            Vector3 SouthLocation = new Vector3(Character.Location.X, 0, Character.Location.Z - 1);
-            Vector3 WestLocation = new Vector3(Character.Location.X - 1, 0, Character.Location.Z);
-            if (!levelIsComplete && CheckLocationForPossibleMove(NorthLocation))
+            if (!levelIsComplete)
             {
-                availableMoves.Add(NorthLocation);
-                Character.NorthMoveAvailable = true;
+                // Check all around the current character location for possible moves
+                Vector3 NorthLocation = new Vector3(Character.Location.X, 0, Character.Location.Z + 1);
+                Vector3 EastLocation = new Vector3(Character.Location.X + 1, 0, Character.Location.Z);
+                Vector3 SouthLocation = new Vector3(Character.Location.X, 0, Character.Location.Z - 1);
+                Vector3 WestLocation = new Vector3(Character.Location.X - 1, 0, Character.Location.Z);
+                Character.NorthMove = CheckLocationForPossibleMove(NorthLocation, DirectionEnum.North);
+                Character.EastMove = CheckLocationForPossibleMove(EastLocation, DirectionEnum.East);
+                Character.SouthMove = CheckLocationForPossibleMove(SouthLocation, DirectionEnum.South);
+                Character.WestMove = CheckLocationForPossibleMove(WestLocation, DirectionEnum.West);
             }
             else
             {
-                Character.NorthMoveAvailable = false;
+                Character.NorthMove = null;
+                Character.EastMove = null;
+                Character.SouthMove = null;
+                Character.WestMove = null;
             }
-            if (!levelIsComplete && CheckLocationForPossibleMove(EastLocation))
-            {
-                availableMoves.Add(EastLocation);
-                Character.EastMoveAvailable = true;
-            }
-            else
-            {
-                Character.EastMoveAvailable = false;
-            }
-            if (!levelIsComplete && CheckLocationForPossibleMove(SouthLocation))
-            {
-                availableMoves.Add(SouthLocation);
-                Character.SouthMoveAvailable = true;
-            }
-            else
-            {
-                Character.SouthMoveAvailable = false;
-            }
-            if (!levelIsComplete && CheckLocationForPossibleMove(WestLocation))
-            {
-                availableMoves.Add(WestLocation);
-                Character.WestMoveAvailable = true;
-            }
-            else
-            {
-                Character.WestMoveAvailable = false;
-            }
-
-            // Set the available moves for the character
-            Character.AvailableMoves = availableMoves;
-
-            return Character.Location.ToString();
         }
 
-        private bool CheckLocationForPossibleMove(Vector3 location)
+        private CharacterAction CheckLocationForPossibleMove(Vector3 location, DirectionEnum direction)
         {
             int x = (int)location.X;
             int z = (int)location.Z;
             if (x < 0 || x >= Level.Map.GetLength(0) || z < 0 || z >= Level.Map.GetLength(1))
             {
-                return false;
+                return null;
             }
             else
             {
-                if (Level.Map[(int)location.X, (int)location.Z] == MapTileType.MapTileType_DoorOpen || Level.Map[(int)location.X, (int)location.Z] == MapTileType.MapTileType_DoorClosed)
+                if (Level.Map[(int)location.X, (int)location.Z] == MapTileType.MapTileType_DoorOpen)
                 {
-                    // it's a door, with two states, open and closed
-                    return true;
+                    // it's an open door, that will be closed
+                    return new CharacterAction(false, location, true, "Close door", direction);
                 }
-                if (Level.Map[(int)location.X, (int)location.Z] == MapTileType.MapTileType_SwitchClosed || Level.Map[(int)location.X, (int)location.Z] == MapTileType.MapTileType_SwitchOpen)
+                else if (Level.Map[(int)location.X, (int)location.Z] == MapTileType.MapTileType_DoorClosed)
                 {
-                    // it's a switch, with two states, open and closed
-                    return true;
+                    // it's an open door, that will be opened
+                    return new CharacterAction(false, location, true, "Open door", direction);
+                }
+                else if (Level.Map[(int)location.X, (int)location.Z] == MapTileType.MapTileType_SwitchOpen)
+                {
+                    // it's an open switch, that will be closed
+                    return new CharacterAction(false, location, true, "Close switch", direction);
+                }
+                else if (Level.Map[(int)location.X, (int)location.Z] == MapTileType.MapTileType_SwitchClosed)
+                {
+                    // it's a closed switch, that will be opened
+                    return new CharacterAction(false, location, true, "Open switch", direction);
                 }
                 else if (Level.Map[(int)location.X, (int)location.Z] == MapTileType.MapTileType_EmptyTile)
                 {
-                    return true;
+                    return new CharacterAction(true, location, false, direction.ToString(), direction);
                 }
                 else
                 {
-                    return false;
+                    return null;
                 }
             }
         }

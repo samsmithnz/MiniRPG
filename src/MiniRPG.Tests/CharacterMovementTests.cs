@@ -16,8 +16,11 @@ public sealed class CharacterMovementTests
         //Act
 
         //Assert
-        Assert.AreEqual(1, game.Character.AvailableMoves.Count);
-        Assert.AreEqual(new Vector3(2, 0, 1), game.Character.AvailableMoves[0]);
+        Assert.IsNotNull( game.Character.NorthMove);
+        Assert.AreEqual(new Vector3(2, 0, 1), game.Character.NorthMove.MoveLocation);
+        Assert.IsNull(game.Character.EastMove);
+        Assert.IsNull(game.Character.SouthMove);
+        Assert.IsNull(game.Character.WestMove);
     }
 
     [TestMethod]
@@ -30,11 +33,14 @@ public sealed class CharacterMovementTests
         game.MoveCharacter(new Vector3(2, 0, 1));
 
         //Assert
-        Assert.AreEqual(4, game.Character.AvailableMoves.Count);
-        Assert.AreEqual(new Vector3(2, 0, 2), game.Character.AvailableMoves[0]);
-        Assert.AreEqual(new Vector3(3, 0, 1), game.Character.AvailableMoves[1]);
-        Assert.AreEqual(new Vector3(2, 0, 0), game.Character.AvailableMoves[2]);
-        Assert.AreEqual(new Vector3(1, 0, 1), game.Character.AvailableMoves[3]);
+        Assert.IsNotNull(game.Character.NorthMove);
+        Assert.AreEqual(new Vector3(2, 0, 2), game.Character.NorthMove.MoveLocation);
+        Assert.IsNotNull(game.Character.EastMove);
+        Assert.AreEqual(new Vector3(3, 0, 1), game.Character.EastMove.MoveLocation);
+        Assert.IsNotNull(game.Character.SouthMove);
+        Assert.AreEqual(new Vector3(2, 0, 0), game.Character.SouthMove.MoveLocation);
+        Assert.IsNotNull(game.Character.WestMove);
+        Assert.AreEqual(new Vector3(1, 0, 1), game.Character.WestMove.MoveLocation);
     }
 
     [TestMethod]
@@ -50,8 +56,11 @@ public sealed class CharacterMovementTests
         game.MoveCharacter(new Vector3(2, 0, 4));
 
         //Assert
-        Assert.AreEqual(0, game.Character.AvailableMoves.Count);
         Assert.AreEqual(true, game.LevelIsComplete());
+        Assert.IsNull(game.Character.NorthMove);
+        Assert.IsNull(game.Character.EastMove);
+        Assert.IsNull(game.Character.SouthMove);
+        Assert.IsNull(game.Character.WestMove);
     }
 
     //[TestMethod]

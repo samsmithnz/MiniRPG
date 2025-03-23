@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using MiniRPG.Logic.Map;
+using System.Collections.Generic;
 using System.Numerics;
 
 namespace MiniRPG.Logic
@@ -7,11 +8,10 @@ namespace MiniRPG.Logic
     {
         public int Life { get; set; } = 1;
         public Vector3 Location { get; set; }
-        public List<Vector3> AvailableMoves { get; set; }
-        public bool NorthMoveAvailable { get; set; }
-        public bool EastMoveAvailable { get; set; }
-        public bool SouthMoveAvailable { get; set; }
-        public bool WestMoveAvailable { get; set; }
+        public CharacterAction NorthMove { get; set; }
+        public CharacterAction EastMove { get; set; }
+        public CharacterAction SouthMove { get; set; }
+        public CharacterAction WestMove { get; set; }
 
         public Character(Vector3 location)
         {
