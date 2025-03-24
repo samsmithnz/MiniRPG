@@ -29,6 +29,12 @@ namespace MiniRPG.Logic
             else if (Level.Map[(int)newLocation.X, (int)newLocation.Z] == MapTileType.MapTileType_SwitchClosed)
             {
                 Level.Map[(int)newLocation.X, (int)newLocation.Z] = MapTileType.MapTileType_SwitchOpen; //toggle the switch
+                if (Level.Logic[(int)newLocation.X, (int)newLocation.Z] != Vector3.Zero)
+                {
+                    // if the switch is connected to a door, unlock and open the door
+                    Vector3 doorLocation = Level.Logic[(int)newLocation.X, (int)newLocation.Z];
+                    Level.Map[(int)doorLocation.X, (int)doorLocation.Z] = MapTileType.MapTileType_DoorOpen;
+                }
             }
             else if (Level.Map[(int)newLocation.X, (int)newLocation.Z] == MapTileType.MapTileType_SwitchOpen)
             {
@@ -91,26 +97,26 @@ namespace MiniRPG.Logic
                 if (Level.Map[(int)location.X, (int)location.Z] == MapTileType.MapTileType_DoorOpen)
                 {
                     // it's an open door, that will be closed
-                    return new CharacterAction(true, location, false, direction.ToString(), direction);
+                    return new CharacterAction(direction.ToString(), direction,true, location, false, Vector3.Zero);
                 }
                 else if (Level.Map[(int)location.X, (int)location.Z] == MapTileType.MapTileType_DoorClosed)
                 {
                     // it's an open door, that will be opened
-                    return new CharacterAction(false, location, true, "Open door", direction);
+                    return new CharacterAction("Open door", direction,false, location, true,  Vector3.Zero);
                 }
                 else if (Level.Map[(int)location.X, (int)location.Z] == MapTileType.MapTileType_SwitchOpen)
                 {
                     // it's an open switch, that will be closed
-                    return new CharacterAction(false, location, true, "Close switch", direction);
+                    return new CharacterAction("Close switch", direction,false, location, true, Level.Logic[(int)location.X, (int)location.Z]);
                 }
                 else if (Level.Map[(int)location.X, (int)location.Z] == MapTileType.MapTileType_SwitchClosed)
                 {
                     // it's a closed switch, that will be opened
-                    return new CharacterAction(false, location, true, "Open switch", direction);
+                    return new CharacterAction("Open switch", direction,false, location, true,  Vector3.Zero);
                 }
                 else if (Level.Map[(int)location.X, (int)location.Z] == MapTileType.MapTileType_EmptyTile)
                 {
-                    return new CharacterAction(true, location, false, direction.ToString(), direction);
+                    return new CharacterAction(direction.ToString(), direction,true, location, false, Vector3.Zero);
                 }
                 else
                 {
