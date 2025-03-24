@@ -135,4 +135,23 @@ public sealed class LevelTests
         //Assert.AreEqual(new Vector3(4, 0, 4), game.Level.Logic[5, 3]);
         //Assert.AreEqual(MapTileType.MapTileType_DoorOpen, game.Level.Map[4, 4]);
     }
+
+    [TestMethod]
+    public void MapStringLevel5Test()
+    {
+        //Arrange
+        Game game = new(5);
+
+        //Act 
+        string mapString = MapCore.GetMapString(game.Level.Map, true);
+        game.MoveCharacter(new(4, 0, 1));
+        game.MoveCharacter(new(4, 0, 2));
+        game.MoveCharacter(new(4, 0, 3));
+        game.MoveCharacter(new(5, 0, 3));
+
+        //Assert
+        Assert.AreEqual(game.Level.Level5Board, mapString);
+        Assert.AreEqual(new Vector3(4, 0, 4), game.Level.Logic[5, 3]);
+        Assert.AreEqual(MapTileType.MapTileType_DoorOpen, game.Level.Map[4, 4]);
+    }
 }
