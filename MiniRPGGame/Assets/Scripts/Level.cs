@@ -116,8 +116,9 @@ namespace Assets.Scripts
                         };
                         newFloorTextObject.transform.SetParent(newFloorCanvasObject.transform);
                         UnityEngine.UI.Text floorText = newFloorTextObject.transform.gameObject.AddComponent<UnityEngine.UI.Text>();
-                        floorText.transform.localPosition = new Vector3(0f, 0.501f, 0f);
-                        floorText.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+                        floorText.transform.SetLocalPositionAndRotation(
+                            new Vector3(0f, 0.501f, 0f), 
+                            Quaternion.Euler(90f, 0f, 0f));
                         floorText.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
                         //floorText.transform.parent = floorCanvas.transform;
                         floorText.rectTransform.sizeDelta = new Vector2(100f, 100f);
@@ -232,8 +233,10 @@ namespace Assets.Scripts
             }
 
             //Create the start and end indicators
-            GameObject startAndEndIndicators = new GameObject();
-            startAndEndIndicators.name = "StartAndEndIndicators";
+            GameObject startAndEndIndicators = new()
+            {
+                name = "StartAndEndIndicators"
+            };
             startAndEndIndicators.transform.parent = parentGameObject.transform;
             GameObject startIndicatorPrefab = Instantiate(Resources.Load<GameObject>("StartArrow"));
             startIndicatorPrefab.transform.position = new Vector3(startingLocation.x, 0, startingLocation.z);
@@ -250,7 +253,7 @@ namespace Assets.Scripts
             characterObject.name = "Character";
             characterObject.transform.parent = parentGameObject.transform;
             //Add the blue material to the character
-            Material blueMaterial = new Material(Shader.Find("Unlit/Color"));
+            Material blueMaterial = new(Shader.Find("Unlit/Color"));
             blueMaterial.SetColor("_Color", Color.blue);
             characterObject.GetComponent<Renderer>().material = blueMaterial;
         }

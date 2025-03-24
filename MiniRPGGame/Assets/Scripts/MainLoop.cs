@@ -60,11 +60,11 @@ namespace Assets.Scripts
                     {
                         _buttonNorth.SetActive(true);
                         //Update the button text
-                        SetButtonText(_buttonNorth, _game.Character.NorthMove.ActionName);
+                        SetButtonText(_buttonNorth, _game.Character.NorthMove.Name);
                         GameObject buttonNorthText = _buttonNorth.transform.GetChild(0).gameObject;
                         if (buttonNorthText != null)
                         {
-                            buttonNorthText.GetComponent<TextMeshProUGUI>().text = _game.Character.NorthMove.ActionName;
+                            buttonNorthText.GetComponent<TextMeshProUGUI>().text = _game.Character.NorthMove.Name;
                         }
                     }
                     else
@@ -81,7 +81,7 @@ namespace Assets.Scripts
                         GameObject buttonEastText = _buttonEast.transform.GetChild(0).gameObject;
                         if (buttonEastText != null)
                         {
-                            buttonEastText.GetComponent<TextMeshProUGUI>().text = _game.Character.EastMove.ActionName;
+                            buttonEastText.GetComponent<TextMeshProUGUI>().text = _game.Character.EastMove.Name;
                         }
                     }
                     else
@@ -98,7 +98,7 @@ namespace Assets.Scripts
                         GameObject buttonSouthText = _buttonSouth.transform.GetChild(0).gameObject;
                         if (buttonSouthText != null)
                         {
-                            buttonSouthText.GetComponent<TextMeshProUGUI>().text = _game.Character.SouthMove.ActionName;
+                            buttonSouthText.GetComponent<TextMeshProUGUI>().text = _game.Character.SouthMove.Name;
                         }
                     }
                     else
@@ -115,7 +115,7 @@ namespace Assets.Scripts
                         GameObject buttonWestText = _buttonWest.transform.GetChild(0).gameObject;
                         if (buttonWestText != null)
                         {
-                            buttonWestText.GetComponent<TextMeshProUGUI>().text = _game.Character.WestMove.ActionName;
+                            buttonWestText.GetComponent<TextMeshProUGUI>().text = _game.Character.WestMove.Name;
                         }
                     }
                     else
@@ -241,14 +241,18 @@ namespace Assets.Scripts
                     }
                 }
                 //Open the door
-                GameObject doorPrefab = GameObject.Find("InternalSkinnyDoor_x" + location.x + "_z" + location.z);
-                if (doorPrefab != null)
+                Vector3 doorLocation = Utility.ConvertToUnity3DV3(_game.Level.Logic[(int)location.x, (int)location.z]);
+                if (doorLocation != Vector3.zero)
                 {
-                    GameObject door = doorPrefab.transform.Find("SM_Buildings_Door").gameObject;
-                    if (door != null)
+                    GameObject doorPrefab = GameObject.Find("InternalSkinnyDoor_x" + doorLocation.x + "_z" + doorLocation.z);
+                    if (doorPrefab != null)
                     {
-                        Debug.Log("Switch is unlocking and opening door");
-                        door.SetActive(false);
+                        GameObject door = doorPrefab.transform.Find("SM_Buildings_Door").gameObject;
+                        if (door != null)
+                        {
+                            Debug.Log("Switch is unlocking and opening door");
+                            door.SetActive(false);
+                        }
                     }
                 }
                 _game.MoveCharacter(Utility.ConvertToNumericsV3(location));
