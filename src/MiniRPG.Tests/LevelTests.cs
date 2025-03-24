@@ -62,6 +62,25 @@ public sealed class LevelTests
         Assert.IsNotNull(game.Character.WestMove);
         Assert.AreEqual(new Vector3(1, 0, 2), game.Character.WestMove.MoveLocation);
 
+        //move north
+        game.MoveCharacter(new(2, 0, 3));
+        Assert.IsNotNull(game.Character.NorthMove);
+        Assert.AreEqual(new Vector3(2, 0, 4), game.Character.NorthMove.MoveLocation);
+        Assert.IsNotNull(game.Character.EastMove);
+        Assert.AreEqual(new Vector3(3, 0, 3), game.Character.EastMove.MoveLocation);
+        Assert.IsNotNull(game.Character.SouthMove);
+        Assert.AreEqual(new Vector3(2, 0, 2), game.Character.SouthMove.MoveLocation);
+        Assert.IsNotNull(game.Character.WestMove);
+        Assert.AreEqual(new Vector3(1, 0, 3), game.Character.WestMove.MoveLocation);
+
+        //move north
+        game.MoveCharacter(new(2, 0, 4));
+        Assert.IsNull(game.Character.NorthMove);
+        Assert.IsNull(game.Character.EastMove);
+        Assert.IsNull(game.Character.SouthMove);
+        Assert.IsNull(game.Character.WestMove);
+        Assert.IsTrue(game.LevelIsComplete());
+
         //Arrange
         string expectedMapString = @"
 W W . W W 
