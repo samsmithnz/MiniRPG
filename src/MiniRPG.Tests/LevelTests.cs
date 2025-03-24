@@ -82,13 +82,6 @@ public sealed class LevelTests
         Assert.IsTrue(game.LevelIsComplete());
 
         //Assert
-        string expectedMapString = @"
-W W . W W 
-W . . . W 
-W . . . W 
-W . . . W 
-W W . W W 
-";
         Assert.AreEqual(game.Level.Level1Board, mapString);
     }
 
@@ -102,17 +95,6 @@ W W . W W
         string mapString = MapCore.GetMapString(game.Level.Map, true);
 
         //Assert
-        string expectedMapString = @"
-W W W W . W W W W 
-W . . . . . . . W 
-W . . . . . . . W 
-W . . . . . . . W 
-W w w w d w w w W 
-W . . . . . . . W 
-W . . . . . . . W 
-W . . . . . . . W 
-W W W W . W W W W 
-";
         Assert.AreEqual(game.Level.Level2Board, mapString);
     }
 
@@ -130,19 +112,27 @@ W W W W . W W W W
         game.MoveCharacter(new(5, 0, 3));
 
         //Assert
-        string expectedMapString = @"
-W W W W . W W W W 
-W . . . . . . . W 
-W . . . . . . . W 
-W . . . . . . . W 
-W w w w a w w w W 
-W . . . . s . . W 
-W . . . . . . . W 
-W . . . . . . . W 
-W W W W . W W W W 
-";
         Assert.AreEqual(game.Level.Level3Board, mapString);
         Assert.AreEqual(new Vector3(4, 0, 4), game.Level.Logic[5, 3]);
         Assert.AreEqual(MapTileType.MapTileType_DoorOpen, game.Level.Map[4, 4]);
+    }
+
+    [TestMethod]
+    public void MapStringLevel4Test()
+    {
+        //Arrange
+        Game game = new(4);
+
+        //Act 
+        string mapString = MapCore.GetMapString(game.Level.Map, true);
+        //game.MoveCharacter(new(4, 0, 1));
+        //game.MoveCharacter(new(4, 0, 2));
+        //game.MoveCharacter(new(4, 0, 3));
+        //game.MoveCharacter(new(5, 0, 3));
+
+        //Assert
+        Assert.AreEqual(game.Level.Level4Board, mapString);
+        //Assert.AreEqual(new Vector3(4, 0, 4), game.Level.Logic[5, 3]);
+        //Assert.AreEqual(MapTileType.MapTileType_DoorOpen, game.Level.Map[4, 4]);
     }
 }
