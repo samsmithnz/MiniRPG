@@ -117,7 +117,7 @@ namespace Assets.Scripts
                         newFloorTextObject.transform.SetParent(newFloorCanvasObject.transform);
                         UnityEngine.UI.Text floorText = newFloorTextObject.transform.gameObject.AddComponent<UnityEngine.UI.Text>();
                         floorText.transform.SetLocalPositionAndRotation(
-                            new Vector3(0f, 0.501f, 0f), 
+                            new Vector3(0f, 0.501f, 0f),
                             Quaternion.Euler(90f, 0f, 0f));
                         floorText.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
                         //floorText.transform.parent = floorCanvas.transform;
@@ -193,7 +193,7 @@ namespace Assets.Scripts
                     else if (map[x, z] == MiniRPG.Logic.Map.MapTileType.MapTileType_WallInner) //internal 'skinny' wall 
                     {
                         GameObject prefab = Instantiate(Resources.Load<GameObject>("SkinnyWall"));
-                        prefab.transform.position = new Vector3(x - 0.5f, 0, z - 0.5f);
+                        prefab.transform.position = new Vector3(x - 0.5f, 0, z);
                         prefab.name = "InternalSkinnyWall_" + "x" + x + "_z" + z;
                         prefab.transform.parent = levelObjects.transform;
                     }
@@ -201,7 +201,7 @@ namespace Assets.Scripts
                         map[x, z] == MiniRPG.Logic.Map.MapTileType.MapTileType_DoorLocked) //internal 'skinny door
                     {
                         GameObject prefab = Instantiate(Resources.Load<GameObject>("SkinnyDoor"));
-                        prefab.transform.position = new Vector3(x - 0.5f, 0, z - 0.5f);
+                        prefab.transform.position = new Vector3(x - 0.5f, 0, z);
                         prefab.name = "InternalSkinnyDoor_" + "x" + x + "_z" + z;
                         prefab.transform.parent = levelObjects.transform;
                     }
