@@ -250,7 +250,7 @@ namespace MiniRPG.Logic
             logic[5, 3] = new Vector3(4, 0, 4);
 
             //Create an external door and switch
-            map[0, 6] = MapTileType.MapTileType_DoorLocked; //Locked external door
+            map[0, 6] = MapTileType.MapTileType_Fan; //fan
             map[3, 3] = MapTileType.MapTileType_SwitchClosed; //Switch in off position (on position is "S")
             logic[3, 3] = new Vector3(0, 0, 6);
 
@@ -322,7 +322,7 @@ W W W W . W W W W
         public string Level5Board = @"
 W W W W . W W W W 
 W g g g g g g g W 
-a g g g g g g g W 
+f g g g g g g g W 
 W g g g g g g g W 
 W w w w a w w w W 
 W . . s . s . . W 
