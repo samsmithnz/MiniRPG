@@ -12,7 +12,7 @@ namespace Assets.Scripts
         private GameObject _buttonEast;
         private GameObject _buttonSouth;
         private GameObject _buttonWest;
-        private int _levelNumber = 1;
+        private int _levelNumber;
 
         void Start()
         {
@@ -21,7 +21,7 @@ namespace Assets.Scripts
             _buttonSouth = GameObject.Find("ButtonSouth");
             _buttonWest = GameObject.Find("ButtonWest");
 
-            _levelNumber = 1;
+            _levelNumber = 3;
             SetupGame(_levelNumber);
         }
 
@@ -139,21 +139,7 @@ namespace Assets.Scripts
                 }
                 else if (_game.Character.NorthMove.IsAction)
                 {
-                    if (_game.Level.Map[(int)newLocation.x, (int)newLocation.z] == MapTileType.MapTileType_DoorClosed)
-                    {
-                        //Open the door
-                        GameObject doorPrefab = GameObject.Find("InternalSkinnyDoor_x" + newLocation.x + "_z" + newLocation.z);
-                        if (doorPrefab != null)
-                        {
-                            GameObject door = doorPrefab.transform.Find("SM_Buildings_Door").gameObject;
-                            if (door != null)
-                            {
-                                door.SetActive(false);
-                            }
-                        }
-                        _game.MoveCharacter(Utility.ConvertToNumericsV3(newLocation));
-                        MoveCharacter(new(_game.Character.Location.X, _game.Character.Location.Y, _game.Character.Location.Z));
-                    }
+                    PerformActions(newLocation);
                 }
             }
             Debug.Log(GetButtonText(_buttonNorth) + " ending at " + _game.Character.Location.ToString());
@@ -172,21 +158,7 @@ namespace Assets.Scripts
                 }
                 else if (_game.Character.EastMove.IsAction)
                 {
-                    if (_game.Level.Map[(int)newLocation.x, (int)newLocation.z] == MapTileType.MapTileType_DoorClosed)
-                    {
-                        //Open the door
-                        GameObject doorPrefab = GameObject.Find("InternalSkinnyDoor_x" + newLocation.x + "_z" + newLocation.z);
-                        if (doorPrefab != null)
-                        {
-                            GameObject door = doorPrefab.transform.Find("SM_Buildings_Door").gameObject;
-                            if (door != null)
-                            {
-                                door.SetActive(false);
-                            }
-                        }
-                        _game.MoveCharacter(Utility.ConvertToNumericsV3(newLocation));
-                        MoveCharacter(new(_game.Character.Location.X, _game.Character.Location.Y, _game.Character.Location.Z));
-                    }
+                    PerformActions(newLocation);
                 }
             }
 
@@ -208,21 +180,7 @@ namespace Assets.Scripts
                 }
                 else if (_game.Character.SouthMove.IsAction)
                 {
-                    if (_game.Level.Map[(int)newLocation.x, (int)newLocation.z] == MapTileType.MapTileType_DoorClosed)
-                    {
-                        //Open the door
-                        GameObject doorPrefab = GameObject.Find("InternalSkinnyDoor_x" + newLocation.x + "_z" + newLocation.z);
-                        if (doorPrefab != null)
-                        {
-                            GameObject door = doorPrefab.transform.Find("SM_Buildings_Door").gameObject;
-                            if (door != null)
-                            {
-                                door.SetActive(false);
-                            }
-                        }
-                        _game.MoveCharacter(Utility.ConvertToNumericsV3(newLocation));
-                        MoveCharacter(new(_game.Character.Location.X, _game.Character.Location.Y, _game.Character.Location.Z));
-                    }
+                    PerformActions(newLocation);
                 }
             }
 
@@ -244,27 +202,58 @@ namespace Assets.Scripts
                 }
                 else if (_game.Character.WestMove.IsAction)
                 {
-                    if (_game.Level.Map[(int)newLocation.x, (int)newLocation.z] == MapTileType.MapTileType_DoorClosed)
-                    {
-                        //Open the door
-                        GameObject doorPrefab = GameObject.Find("InternalSkinnyDoor_x" + newLocation.x + "_z" + newLocation.z);
-                        if (doorPrefab != null)
-                        {
-                            GameObject door = doorPrefab.transform.Find("SM_Buildings_Door").gameObject;
-                            if (door != null)
-                            {
-                                door.SetActive(false);
-                            }
-                        }
-                        _game.MoveCharacter(Utility.ConvertToNumericsV3(newLocation));
-                        MoveCharacter(new(_game.Character.Location.X, _game.Character.Location.Y, _game.Character.Location.Z));
-                    }
+                    PerformActions(newLocation);
                 }
             }
 
-            //_game.Character.Location = Utility.ConvertToNumericsV3(newLocation);
-            //MoveCharacter(newLocation);
             Debug.Log(GetButtonText(_buttonWest) + " ending at " + _game.Character.Location.ToString());
+        }
+
+        private void PerformActions(Vector3 location)
+        {
+            if (_game.Level.Map[(int)location.x, (int)location.z] == MapTileType.MapTileType_DoorClosed)
+            {
+                //Open the door
+                GameObject doorPrefab = GameObject.Find("InternalSkinnyDoor_x" + location.x + "_z" + location.z);
+                if (doorPrefab != null)
+                {
+                    GameObject door = doorPrefab.transform.Find("SM_Buildings_Door").gameObject;
+                    if (door != null)
+                    {
+                        door.SetActive(false);
+                    }
+                }
+                _game.MoveCharacter(Utility.ConvertToNumericsV3(location));
+                MoveCharacter(new(_game.Character.Location.X, _game.Character.Location.Y, _game.Character.Location.Z));
+            }
+            else if (_game.Level.Map[(int)location.x, (int)location.z] == MapTileType.MapTileType_SwitchClosed)
+            {
+                //Open the switch
+                GameObject switchPrefab = GameObject.Find("Switch_x" + location.x + "_z" + location.z);
+                if (switchPrefab != null)
+                {
+                    GameObject switchLever = switchPrefab.transform.GetChild(0).GetChild(0).gameObject;
+                    if (switchLever != null)
+                    {
+                        Debug.Log("Switch is turning on");
+                        //set the level to on/open
+                        switchLever.transform.rotation = Quaternion.Euler(-30, 0, 0);
+                    }
+                }
+                //Open the door
+                GameObject doorPrefab = GameObject.Find("InternalSkinnyDoor_x" + location.x + "_z" + location.z);
+                if (doorPrefab != null)
+                {
+                    GameObject door = doorPrefab.transform.Find("SM_Buildings_Door").gameObject;
+                    if (door != null)
+                    {
+                        Debug.Log("Switch is unlocking and opening door");
+                        door.SetActive(false);
+                    }
+                }
+                _game.MoveCharacter(Utility.ConvertToNumericsV3(location));
+                MoveCharacter(new(_game.Character.Location.X, _game.Character.Location.Y, _game.Character.Location.Z));
+            }
         }
 
         private void SetButtonText(GameObject button, string buttonText)

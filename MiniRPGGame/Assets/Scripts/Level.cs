@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 using UnityEditor.Analytics;
 using UnityEditor.Playables;
 using UnityEngine;
+using static UnityEditor.FilePathAttribute;
 
 namespace Assets.Scripts
 {
@@ -182,7 +183,7 @@ namespace Assets.Scripts
                 for (int z = 0; z <= breadth - 1; z++)
                 {
                     if (map[x, z] == MiniRPG.Logic.Map.MapTileType.MapTileType_WallOuter) //outer border
-                    {                        
+                    {
                         GameObject prefab = Instantiate(Resources.Load<GameObject>("OutsideWall"));
                         prefab.transform.position = new Vector3(x - 0.5f, 0, z - 0.5f);
                         prefab.name = "OutsideWall_" + "x" + x + "_z" + z;
@@ -195,7 +196,8 @@ namespace Assets.Scripts
                         prefab.name = "InternalSkinnyWall_" + "x" + x + "_z" + z;
                         prefab.transform.parent = levelObjects.transform;
                     }
-                    else if (map[x, z] == MiniRPG.Logic.Map.MapTileType.MapTileType_DoorClosed) //internal 'skinny door
+                    else if (map[x, z] == MiniRPG.Logic.Map.MapTileType.MapTileType_DoorClosed ||
+                        map[x, z] == MiniRPG.Logic.Map.MapTileType.MapTileType_DoorLocked) //internal 'skinny door
                     {
                         GameObject prefab = Instantiate(Resources.Load<GameObject>("SkinnyDoor"));
                         prefab.transform.position = new Vector3(x - 0.5f, 0, z - 0.5f);
@@ -212,9 +214,15 @@ namespace Assets.Scripts
                     else if (map[x, z] == MiniRPG.Logic.Map.MapTileType.MapTileType_SwitchClosed) //Switch toggle
                     {
                         GameObject prefab = Instantiate(Resources.Load<GameObject>("Switch"));
-                        prefab.transform.position = new Vector3(x - 0.5f, 0, z - 0.5f);
+                        prefab.transform.position = new Vector3(x, 0, z);
                         prefab.name = "Switch_" + "x" + x + "_z" + z;
                         prefab.transform.parent = levelObjects.transform;
+                        GameObject switchLever = prefab.transform.GetChild(0).GetChild(0).gameObject;
+                        if (switchLever != null)
+                        {
+                            //set the level to off/closed
+                            switchLever.transform.rotation = Quaternion.Euler(30, 0, 0);
+                        }
                     }
                     else if (map[x, z] != "")
                     {
