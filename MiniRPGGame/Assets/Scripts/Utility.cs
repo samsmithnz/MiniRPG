@@ -11,7 +11,7 @@ namespace Assets.Scripts
     {
         public static string CreateName(string prefix, Vector3 location)
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             sb.Append(prefix);
             sb.Append("_x");
             sb.Append(location.x.ToString());
@@ -35,7 +35,7 @@ namespace Assets.Scripts
 
         public static List<UnityEngine.Vector3> ConvertToUnity3DV3List(List<System.Numerics.Vector3> vector3List)
         {
-            List<UnityEngine.Vector3> results = new List<UnityEngine.Vector3>();
+            List<UnityEngine.Vector3> results = new();
             foreach (System.Numerics.Vector3 item in vector3List)
             {
                 results.Add(ConvertToUnity3DV3(item));
@@ -45,7 +45,7 @@ namespace Assets.Scripts
 
         public static List<KeyValuePair<Vector3, int>> ConvertToUnity3DV3List(List<KeyValuePair<System.Numerics.Vector3, int>> vector3List)
         {
-            List<KeyValuePair<Vector3, int>> results = new List<KeyValuePair<Vector3, int>>();
+            List<KeyValuePair<Vector3, int>> results = new();
             foreach (KeyValuePair<System.Numerics.Vector3, int> item in vector3List)
             {
                 results.Add(new KeyValuePair<Vector3, int>(ConvertToUnity3DV3(item.Key), item.Value));
@@ -55,7 +55,7 @@ namespace Assets.Scripts
 
         public static List<System.Numerics.Vector3> ConvertToNumericsV3List(List<UnityEngine.Vector3> vector3List)
         {
-            List<System.Numerics.Vector3> results = new List<System.Numerics.Vector3>();
+            List<System.Numerics.Vector3> results = new();
             foreach (UnityEngine.Vector3 item in vector3List)
             {
                 results.Add(ConvertToNumericsV3(item));

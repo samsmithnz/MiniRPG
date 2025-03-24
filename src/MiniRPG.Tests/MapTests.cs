@@ -1,4 +1,5 @@
-﻿using MiniRPG.Logic.Map;
+﻿using MiniRPG.Logic;
+using MiniRPG.Logic.Map;
 using System.Numerics;
 
 namespace MiniRPG.Tests;
@@ -67,4 +68,5 @@ A B
 ";
         Assert.AreEqual(expectedMapString, mapString);
     }
+
 }

@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TMPro;
+using Unity.VisualScripting;
+using UnityEditor.Analytics;
 using UnityEditor.Playables;
 using UnityEngine;
+using static UnityEditor.FilePathAttribute;
 
 namespace Assets.Scripts
 {
@@ -20,12 +24,51 @@ namespace Assets.Scripts
         //    CharacterStartingLocation = characterStartingLocation;
         //}
 
-        public static void SetupLevel(GameObject parentGameObject, string[,] map, bool showLinesOnFloor, bool showCoordsOnFloor, Vector3 startingLocation)
+        public static void SetupLevel(GameObject parentGameObject,
+            int levelNumber,
+            string[,] map,
+            bool showLinesOnFloor,
+            bool showCoordsOnFloor,
+            Vector3 startingLocation,
+            Vector3 endingLocation)
         {
+            if (map == null)
+            {
+                Debug.LogError("No map found - perhaps this is the end of the road? GAME OVER!!");
+                Application.Quit();
+                return;
+            }
+
             Font font = Resources.GetBuiltinResource(typeof(Font), "LegacyRuntime.ttf") as Font;
             int width = map.GetLength(0);
             //int height = map.GetLength(1);
             int breadth = map.GetLength(1);
+
+            // start by deleting the preview map
+            GameObject floorTypeToDelete = GameObject.Find("FloorType");
+            if (floorTypeToDelete != null)
+            {
+                GameObject.Destroy(floorTypeToDelete);
+            }
+            GameObject levelObjectsToDelete = GameObject.Find(name: "LevelObjects");
+            if (levelObjectsToDelete != null)
+            {
+                GameObject.Destroy(levelObjectsToDelete);
+            }
+            GameObject startAndEndIndicatorsToDelete = GameObject.Find(name: "StartAndEndIndicators");
+            if (startAndEndIndicatorsToDelete != null)
+            {
+                GameObject.Destroy(startAndEndIndicatorsToDelete);
+            }
+            GameObject characterToDelete = GameObject.Find(name: "Character");
+            if (characterToDelete != null)
+            {
+                GameObject.Destroy(characterToDelete);
+            }
+            //if (levelNumber == 2)
+            //{
+            //    return;
+            //}
 
             ////setup the map object and create the map
             //GameObject parentFloor = new GameObject
@@ -34,20 +77,30 @@ namespace Assets.Scripts
             //};
             //parentFloor.transform.parent = parentGameObject.transform;
 
+            GameObject textLevel = GameObject.Find("TextLevel");
+            if (textLevel != null)
+            {
+                textLevel.GetComponent<TextMeshProUGUI>().text = "Level: " + levelNumber.ToString();
+            }
             //Draw the map on the screen
+            GameObject floorType = new()
+            {
+                name = "FloorType"
+            };
+            floorType.transform.parent = parentGameObject.transform;
             for (int x = 0; x <= width - 1; x++)
             {
-                for (int y = 0; y <= breadth - 1; y++)
+                for (int z = 0; z <= breadth - 1; z++)
                 {
                     //Create map floor
-                    GameObject newFloorObject = new GameObject();//.CreatePrimitive(PrimitiveType.Cube);
-                    newFloorObject.transform.position = new Vector3(x, -0.5f, y);
-                    newFloorObject.name = Utility.CreateName("floor_type_" + map[x, y], newFloorObject.transform.position);
-                    newFloorObject.transform.parent = parentGameObject.transform;
+                    GameObject newFloorObject = new();//.CreatePrimitive(PrimitiveType.Cube);
+                    newFloorObject.transform.position = new Vector3(x, -0.5f, z);
+                    newFloorObject.name = Utility.CreateName("floor_type_" + map[x, z], newFloorObject.transform.position);
+                    newFloorObject.transform.parent = floorType.transform;
 
                     if (showCoordsOnFloor == true)
                     {
-                        GameObject newFloorCanvasObject = new GameObject
+                        GameObject newFloorCanvasObject = new()
                         {
                             name = "Canvas"
                         };
@@ -57,14 +110,15 @@ namespace Assets.Scripts
                         floorCanvas.renderMode = RenderMode.WorldSpace;
                         floorCanvas.worldCamera = Camera.main;
 
-                        GameObject newFloorTextObject = new GameObject
+                        GameObject newFloorTextObject = new()
                         {
                             name = "Text"
                         };
                         newFloorTextObject.transform.SetParent(newFloorCanvasObject.transform);
                         UnityEngine.UI.Text floorText = newFloorTextObject.transform.gameObject.AddComponent<UnityEngine.UI.Text>();
-                        floorText.transform.localPosition = new Vector3(0f, 0.501f, 0f);
-                        floorText.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+                        floorText.transform.SetLocalPositionAndRotation(
+                            new Vector3(0f, 0.501f, 0f),
+                            Quaternion.Euler(90f, 0f, 0f));
                         floorText.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
                         //floorText.transform.parent = floorCanvas.transform;
                         floorText.rectTransform.sizeDelta = new Vector2(100f, 100f);
@@ -72,7 +126,7 @@ namespace Assets.Scripts
                         floorText.alignment = TextAnchor.MiddleCenter;
                         floorText.fontSize = 24;
                         floorText.font = font;
-                        floorText.text = "x" + x.ToString() + ",y" + y.ToString();
+                        floorText.text = "x" + x.ToString() + ",y" + z.ToString();
                     }
 
                     //GameObject newObject = GameObject.Instantiate(Resources.Load<GameObject>("PolygonStarter/Prefabs/SM_PolygonPrototype_Buildings_Block_1x1_01P"), Vector3.zero, Quaternion.identity) as GameObject;
@@ -87,7 +141,7 @@ namespace Assets.Scripts
                     if (showLinesOnFloor == true)
                     {
                         //Draw line renderers
-                        if (x == 0 && y != breadth - 1)
+                        if (x == 0 && z != breadth - 1)
                         {
                             LineRenderer xGuideLine = newFloorObject.AddComponent<LineRenderer>();
                             if (xGuideLine != null)
@@ -96,11 +150,11 @@ namespace Assets.Scripts
                                 xGuideLine.widthMultiplier = 0.04f;
                                 xGuideLine.startColor = Color.cyan;
                                 xGuideLine.endColor = Color.cyan;
-                                xGuideLine.SetPosition(0, new Vector3(-0.5f, 0.01f, y + 0.5f));
-                                xGuideLine.SetPosition(1, new Vector3(width - 0.5f, 0.01f, y + 0.5f));
+                                xGuideLine.SetPosition(0, new Vector3(-0.5f, 0.01f, z + 0.5f));
+                                xGuideLine.SetPosition(1, new Vector3(width - 0.5f, 0.01f, z + 0.5f));
                             }
                         }
-                        else if (y == breadth - 1 && x != 0)
+                        else if (z == breadth - 1 && x != 0)
                         {
                             LineRenderer yGuideLine = newFloorObject.AddComponent<LineRenderer>();
                             if (yGuideLine != null)
@@ -118,13 +172,88 @@ namespace Assets.Scripts
                 } //end z for
             } //end x for
 
+
+            //Create the game objects for the level from the prefabs
+            GameObject levelObjects = new()
+            {
+                name = "LevelObjects"
+            };
+            levelObjects.transform.parent = parentGameObject.transform;
+            for (int x = 0; x <= width - 1; x++)
+            {
+                for (int z = 0; z <= breadth - 1; z++)
+                {
+                    if (map[x, z] == MiniRPG.Logic.Map.MapTileType.MapTileType_WallOuter) //outer border
+                    {
+                        GameObject prefab = Instantiate(Resources.Load<GameObject>("OutsideWall"));
+                        prefab.transform.position = new Vector3(x - 0.5f, 0, z - 0.5f);
+                        prefab.name = "OutsideWall_" + "x" + x + "_z" + z;
+                        prefab.transform.parent = levelObjects.transform;
+                    }
+                    else if (map[x, z] == MiniRPG.Logic.Map.MapTileType.MapTileType_WallInner) //internal 'skinny' wall 
+                    {
+                        GameObject prefab = Instantiate(Resources.Load<GameObject>("SkinnyWall"));
+                        prefab.transform.position = new Vector3(x - 0.5f, 0, z);
+                        prefab.name = "InternalSkinnyWall_" + "x" + x + "_z" + z;
+                        prefab.transform.parent = levelObjects.transform;
+                    }
+                    else if (map[x, z] == MiniRPG.Logic.Map.MapTileType.MapTileType_DoorClosed ||
+                        map[x, z] == MiniRPG.Logic.Map.MapTileType.MapTileType_DoorLocked) //internal 'skinny door
+                    {
+                        GameObject prefab = Instantiate(Resources.Load<GameObject>("SkinnyDoor"));
+                        prefab.transform.position = new Vector3(x - 0.5f, 0, z);
+                        prefab.name = "InternalSkinnyDoor_" + "x" + x + "_z" + z;
+                        prefab.transform.parent = levelObjects.transform;
+                    }
+                    //else if (map[x, z] == MiniRPG.Logic.Map.MapTileType.MapTileType_DoorLocked) //Airlock door
+                    //{
+                    //    GameObject prefab = Instantiate(Resources.Load<GameObject>("Airlock"));
+                    //    prefab.transform.position = new Vector3(x , 0, z );
+                    //    prefab.name = "AirlockDoor_" + "x" + x + "_z" + z;
+                    //    prefab.transform.parent = levelObjects.transform;
+                    //}
+                    else if (map[x, z] == MiniRPG.Logic.Map.MapTileType.MapTileType_SwitchClosed) //Switch toggle
+                    {
+                        GameObject prefab = Instantiate(Resources.Load<GameObject>("Switch"));
+                        prefab.transform.position = new Vector3(x, 0, z);
+                        prefab.name = "Switch_" + "x" + x + "_z" + z;
+                        prefab.transform.parent = levelObjects.transform;
+                        GameObject switchLever = prefab.transform.GetChild(0).GetChild(0).gameObject;
+                        if (switchLever != null)
+                        {
+                            //set the level to off/closed
+                            switchLever.transform.rotation = Quaternion.Euler(30, 0, 0);
+                        }
+                    }
+                    else if (map[x, z] != "")
+                    {
+                        Debug.LogWarning("Unknown map object found, of type '" + map[x, z] + "'");
+                    }
+                }
+            }
+
+            //Create the start and end indicators
+            GameObject startAndEndIndicators = new()
+            {
+                name = "StartAndEndIndicators"
+            };
+            startAndEndIndicators.transform.parent = parentGameObject.transform;
+            GameObject startIndicatorPrefab = Instantiate(Resources.Load<GameObject>("StartArrow"));
+            startIndicatorPrefab.transform.position = new Vector3(startingLocation.x, 0, startingLocation.z);
+            startIndicatorPrefab.name = "StartIndicator";
+            startIndicatorPrefab.transform.parent = startAndEndIndicators.transform;
+            GameObject endIndicatorPrefab = Instantiate(Resources.Load<GameObject>("EndTarget"));
+            endIndicatorPrefab.transform.position = new Vector3(endingLocation.x, 0, endingLocation.z);
+            endIndicatorPrefab.name = "EndIndicator";
+            endIndicatorPrefab.transform.parent = startAndEndIndicators.transform;
+
             //Create the character
             GameObject characterObject = GameObject.CreatePrimitive(PrimitiveType.Capsule);
             characterObject.transform.position = startingLocation;
-            characterObject.name = "character";
+            characterObject.name = "Character";
             characterObject.transform.parent = parentGameObject.transform;
             //Add the blue material to the character
-            Material blueMaterial = new Material(Shader.Find("Unlit/Color"));
+            Material blueMaterial = new(Shader.Find("Unlit/Color"));
             blueMaterial.SetColor("_Color", Color.blue);
             characterObject.GetComponent<Renderer>().material = blueMaterial;
         }
