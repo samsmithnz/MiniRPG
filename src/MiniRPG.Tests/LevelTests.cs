@@ -54,13 +54,13 @@ public sealed class LevelTests
         //move east
         game.MoveCharacter(new(2, 0, 2));
         Assert.IsNotNull(game.Character.NorthMove);
-        Assert.AreEqual(new Vector3(2, 0, 2), game.Character.NorthMove.MoveLocation);
+        Assert.AreEqual(new Vector3(2, 0, 3), game.Character.NorthMove.MoveLocation);
         Assert.IsNotNull(game.Character.EastMove);
-        Assert.AreEqual(new Vector3(3, 0, 1), game.Character.EastMove.MoveLocation);
+        Assert.AreEqual(new Vector3(3, 0, 2), game.Character.EastMove.MoveLocation);
         Assert.IsNotNull(game.Character.SouthMove);
-        Assert.AreEqual(new Vector3(2, 0, 0), game.Character.SouthMove.MoveLocation);
+        Assert.AreEqual(new Vector3(2, 0, 1), game.Character.SouthMove.MoveLocation);
         Assert.IsNotNull(game.Character.WestMove);
-        Assert.AreEqual(new Vector3(1, 0, 1), game.Character.WestMove.MoveLocation);
+        Assert.AreEqual(new Vector3(1, 0, 2), game.Character.WestMove.MoveLocation);
 
         //Arrange
         string expectedMapString = @"
