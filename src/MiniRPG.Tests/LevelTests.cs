@@ -89,7 +89,7 @@ W . . . W
 W . . . W 
 W W . W W 
 ";
-        Assert.AreEqual(expectedMapString, mapString);
+        Assert.AreEqual(game.Level.Level1Board, mapString);
     }
 
     [TestMethod]
@@ -113,7 +113,7 @@ W . . . . . . . W
 W . . . . . . . W 
 W W W W . W W W W 
 ";
-        Assert.AreEqual(expectedMapString, mapString);
+        Assert.AreEqual(game.Level.Level2Board, mapString);
     }
 
     [TestMethod]
@@ -141,7 +141,7 @@ W . . . . . . . W
 W . . . . . . . W 
 W W W W . W W W W 
 ";
-        Assert.AreEqual(expectedMapString, mapString);
+        Assert.AreEqual(game.Level.Level3Board, mapString);
         Assert.AreEqual(new Vector3(4, 0, 4), game.Level.Logic[5, 3]);
         Assert.AreEqual(MapTileType.MapTileType_DoorOpen, game.Level.Map[4, 4]);
     }

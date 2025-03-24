@@ -145,44 +145,44 @@ namespace MiniRPG.Logic
         }
 
         public string Level1Board = @"
-WW.WW
-W...W
-W...W
-W...W
-WW.WW
+W W . W W 
+W . . . W 
+W . . . W 
+W . . . W 
+W W . W W 
 ";
         public string Level2Board = @"
-WWWW.WWWW
-W.......W
-W.......W
-W.......W
-WWWWdWWWW
-W.......W
-W.......W
-W.......W
-WWWW.WWWW
+W W W W . W W W W 
+W . . . . . . . W 
+W . . . . . . . W 
+W . . . . . . . W 
+W w w w d w w w W 
+W . . . . . . . W 
+W . . . . . . . W 
+W . . . . . . . W 
+W W W W . W W W W 
 ";
         public string Level3Board = @"
-WWWW.WWWW
-W.......W
-W.......W
-W.......W
-WWWWaWWWW
-W....s..W
-W.......W
-W.......W
-WWWW.WWWW
+W W W W . W W W W 
+W . . . . . . . W 
+W . . . . . . . W 
+W . . . . . . . W 
+W w w w a w w w W 
+W . . . . s . . W 
+W . . . . . . . W 
+W . . . . . . . W 
+W W W W . W W W W 
 ";
         public string Level4Board = @"
-WWWW.WWWW
-W.......W
-W.......W
-W.WWaWW.W
-WWWs..WWW
-W.WWaWW.W
-W....s..W
-W.......W
-WWWW.WWWW
+W W W W . W W W W 
+W . . . . . . . W 
+W . . . . . . . W 
+W . . . . . . . W 
+W w w w a w w w W 
+W . . . . s . . W 
+W . . . . . . . W 
+W . . . . . . . W 
+W W W W . W W W W 
 ";
 
         public string[,] ProcessLevelBoard(string levelBoard)
