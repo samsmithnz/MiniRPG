@@ -9,6 +9,7 @@ namespace MiniRPG.Logic
         public Vector3 StartingLocation { get; set; }
         public Vector3 EndingLocation { get; set; }
         public string[,] Map { get; set; }
+        public Vector3[,] Logic { get; set; }
 
         public Level(int levelNumber)
         {
@@ -47,9 +48,9 @@ namespace MiniRPG.Logic
                     {
                         map[x, z] = MapTileType.MapTileType_WallOuter; //Outer wall
                     }
-
                 }
             }
+
             //Clear the starting and ending locations
             map[(int)startingLocation.X, (int)startingLocation.Z] = MapTileType.MapTileType_EmptyTile;
             map[(int)endingLocation.X, (int)endingLocation.Z] = MapTileType.MapTileType_EmptyTile;
@@ -77,7 +78,6 @@ namespace MiniRPG.Logic
                     {
                         map[x, z] = MapTileType.MapTileType_WallOuter;
                     }
-
                 }
             }
 
@@ -105,6 +105,7 @@ namespace MiniRPG.Logic
             int xMax = 9;
             int zMax = 9;
             string[,] map = MapCore.InitializeMap(xMax, zMax);
+            Vector3[,] logic = new Vector3[xMax, zMax];
             Vector3 startingLocation = new Vector3(4, 0, 0);
             Vector3 endingLocation = new Vector3(4, 0, 8);
 
@@ -117,7 +118,6 @@ namespace MiniRPG.Logic
                     {
                         map[x, z] = MapTileType.MapTileType_WallOuter;
                     }
-
                 }
             }
 
@@ -131,12 +131,15 @@ namespace MiniRPG.Logic
             map[7, 4] = MapTileType.MapTileType_WallInner;
             map[5, 3] = MapTileType.MapTileType_SwitchClosed; //Switch in off position (on position is "S")
 
+            logic[5, 3] = new Vector3(4, 0, 4);
+
             //Clear the starting and ending locations
             map[(int)startingLocation.X, (int)startingLocation.Z] = MapTileType.MapTileType_EmptyTile;
             map[(int)endingLocation.X, (int)endingLocation.Z] = MapTileType.MapTileType_EmptyTile;
 
             //Set the global values for this level
             Map = map;
+            Logic = logic;
             StartingLocation = startingLocation;
             EndingLocation = endingLocation;
         }

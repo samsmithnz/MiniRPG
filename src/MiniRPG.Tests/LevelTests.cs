@@ -81,7 +81,7 @@ public sealed class LevelTests
         Assert.IsNull(game.Character.WestMove);
         Assert.IsTrue(game.LevelIsComplete());
 
-        //Arrange
+        //Assert
         string expectedMapString = @"
 W W . W W 
 W . . . W 
@@ -101,7 +101,7 @@ W W . W W
         //Act 
         string mapString = MapCore.GetMapString(game.Level.Map, true);
 
-        //Arrange
+        //Assert
         string expectedMapString = @"
 W W W W . W W W W 
 W . . . . . . . W 
@@ -114,5 +114,30 @@ W . . . . . . . W
 W W W W . W W W W 
 ";
         Assert.AreEqual(expectedMapString, mapString);
+    }
+
+    [TestMethod]
+    public void MapStringLevel3Test()
+    {
+        //Arrange
+        Game game = new(3);
+
+        //Act 
+        string mapString = MapCore.GetMapString(game.Level.Map, true);
+
+        //Assert
+        string expectedMapString = @"
+W W W W . W W W W 
+W . . . . . . . W 
+W . . . . . . . W 
+W . . . . . . . W 
+W w w w a w w w W 
+W . . . . s . . W 
+W . . . . . . . W 
+W . . . . . . . W 
+W W W W . W W W W 
+";
+        Assert.AreEqual(expectedMapString, mapString);
+        Assert.AreEqual(new Vector3(4, 0, 4), game.Level.Logic[5, 3]);
     }
 }
