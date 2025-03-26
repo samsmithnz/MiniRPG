@@ -225,6 +225,13 @@ namespace Assets.Scripts
                             switchLever.transform.rotation = Quaternion.Euler(30, 0, 0);
                         }
                     }
+                    else if (map[x, z] == MiniRPG.Logic.Map.MapTileType.MapTileType_PoisonGas) //Poison gas!!
+                    {
+                        GameObject prefab = Instantiate(Resources.Load<GameObject>("PoisonGas"));
+                        prefab.transform.position = new Vector3(x, 0.5f, z);
+                        prefab.name = "Switch_" + "x" + x + "_z" + z;
+                        prefab.transform.parent = levelObjects.transform;
+                    }
                     else if (map[x, z] != "")
                     {
                         Debug.LogWarning("Unknown map object found, of type '" + map[x, z] + "'");
