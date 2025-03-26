@@ -21,7 +21,7 @@ namespace Assets.Scripts
             _buttonSouth = GameObject.Find("ButtonSouth");
             _buttonWest = GameObject.Find("ButtonWest");
 
-            _levelNumber = 3;
+            _levelNumber = 5;
             SetupGame(_levelNumber);
         }
 

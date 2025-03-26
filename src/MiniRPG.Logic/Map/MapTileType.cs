@@ -14,5 +14,7 @@ namespace MiniRPG.Logic.Map
         public const string MapTileType_SwitchOpen = "S";
         public const string MapTileType_WallInner = "w";
         public const string MapTileType_WallOuter = "W";
+        public const string MapTileType_PoisonGas = "g";
+        public const string MapTileType_Fan = "f";
     }
 }
