@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MiniRPG.Logic.Map
+﻿namespace MiniRPG.Logic.Map
 {
     public static class MapTileType
     {
