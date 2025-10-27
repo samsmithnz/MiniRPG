@@ -43,7 +43,7 @@ jobs:
         uses: game-ci/unity-request-activation-file@v2
       # Upload artifact (Unity_v20XX.X.XXXX.alf)
       - name: Expose as artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ steps.getManualLicenseFile.outputs.filePath }}
           path: ${{ steps.getManualLicenseFile.outputs.filePath }}
@@ -69,7 +69,7 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: Test results (all modes)
           path: ${{ steps.testRunner.outputs.artifactsPath }}
@@ -102,7 +102,7 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: ${{ matrix.targetPlatform }}
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: Build-${{ matrix.targetPlatform }}
           path: build
@@ -134,7 +134,7 @@ jobs:
         with:
           targetPlatform: ${{ matrix.targetPlatform }}
           projectPath: MiniRPGGame
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: Build-${{ matrix.targetPlatform }}
           path: build
