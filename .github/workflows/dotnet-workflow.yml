@@ -44,7 +44,7 @@ jobs:
       if: false
       run: xcopy /s /e /y src/MiniRPG.Logic/bin/Debug MiniRPGGame/Assets/Logic/
     - name: Upload package back to GitHub
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: drop
         path: src/MiniRPG/bin/Release
